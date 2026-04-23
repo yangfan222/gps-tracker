@@ -71,45 +71,35 @@ echo.
 echo [6/6] Restarting backend service...
 echo --------------------------------------------
 
-:: Try pm2 first
-where pm2 >nul 2>&1
+:: Kill ALL existing node processes
+echo Stopping old services...
+taskkill /f /im node.exe >nul 2>&1
+timeout /t 2 /nobreak >nul
+
+:: Start backend in a new visible window that stays open
+cd /d "%PROJECT_DIR%\backend"
+echo Starting backend service...
+start "GPS-Tracker-Backend [port 3000]" cmd /k "cd /d %PROJECT_DIR%\backend && node dist/main.js"
+
+:: Wait for startup
+echo Waiting for service to start...
+timeout /t 5 /nobreak >nul
+
+:: Verify
+netstat -an | findstr "LISTENING" | findstr ":3000" >nul
 if !errorlevel! equ 0 (
-    echo Using pm2 to restart...
-    call pm2 restart gps-tracker 2>nul
-    if !errorlevel! neq 0 (
-        echo pm2 process not found, starting new...
-        cd /d "%PROJECT_DIR%\backend"
-        call pm2 start dist/main.js --name gps-tracker
-    )
-    call pm2 status
-    echo [OK] Service restarted via pm2.
+    echo [OK] Backend is running on port 3000!
 ) else (
-    echo pm2 not found, using direct node...
-    :: Kill existing node processes running main.js
-    for /f "tokens=2" %%i in ('tasklist /fi "imagename eq node.exe" /fo csv /nh 2^>nul') do (
-        set "pid=%%~i"
-    )
-    taskkill /f /im node.exe >nul 2>&1
-    echo Old processes killed.
-    
-    :: Start backend in background
-    cd /d "%PROJECT_DIR%\backend"
-    start "GPS-Tracker-Backend" /min cmd /c "node dist/main.js"
-    
-    :: Wait and verify
-    timeout /t 3 /nobreak >nul
-    netstat -an | findstr ":3000" >nul
-    if !errorlevel! equ 0 (
-        echo [OK] Backend running on port 3000.
-    ) else (
-        echo [WARN] Port 3000 not detected yet, service may still be starting...
-    )
+    echo [INFO] Service is starting in the new window, please check it.
 )
 
 echo.
 echo ============================================
 echo   Deploy Complete!
 echo   Backend: http://1.94.48.15:3000
+echo   
+echo   Backend is running in the other window.
+echo   DO NOT close that window!
 echo ============================================
 echo.
 pause
