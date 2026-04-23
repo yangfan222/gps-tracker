@@ -5,6 +5,7 @@ dist/
 *.apk
 *.zip
 *.rar
+*.tar.gz
 # 不排除前端资源图片
 .DS_Store
 .env
@@ -17,3 +18,7 @@ frontend/android/app/build/
 frontend/android/capacitor-android/build/
 frontend/android/capacitor-cordova-android-plugins/build/
 nul
+# 截图和大文件
+png/
+map_*.png
+deploy-package.tar.gz
