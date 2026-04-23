@@ -1,124 +1,128 @@
 # GPS Tracker 一键部署脚本 (Windows Server)
-# 在服务器的 PowerShell 中运行此脚本
+# 用法: powershell -ExecutionPolicy Bypass -File C:\deploy.ps1
 
 $ErrorActionPreference = "Continue"
+$SERVER_IP = "1.94.48.15"
+$PROJECT_DIR = "C:\gps-tracker"
+$REPO_URL = "https://github.com/yangfan222/gps-tracker.git"
 
-Write-Host "========================================" -ForegroundColor Cyan
+function Refresh-Path {
+    $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+}
+
+Write-Host "==========================================" -ForegroundColor Cyan
 Write-Host "  GPS Tracker 一键部署脚本" -ForegroundColor Cyan
-Write-Host "========================================" -ForegroundColor Cyan
+Write-Host "==========================================" -ForegroundColor Cyan
 
-# Step 1: 检查/安装 Node.js
-Write-Host "`n[1/5] 检查 Node.js..." -ForegroundColor Yellow
-$nodeVersion = $null
-try { $nodeVersion = node --version 2>$null } catch {}
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
-if (-not $nodeVersion) {
-    Write-Host "Node.js 未安装，正在下载安装..." -ForegroundColor Yellow
-    $nodeUrl = "https://npmmirror.com/mirrors/node/v20.18.0/node-v20.18.0-x64.msi"
-    $nodeInstaller = "$env:TEMP\node-installer.msi"
-    
-    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-    Invoke-WebRequest -Uri $nodeUrl -OutFile $nodeInstaller -UseBasicParsing
-    
-    Write-Host "正在安装 Node.js..." -ForegroundColor Yellow
-    Start-Process msiexec.exe -ArgumentList "/i `"$nodeInstaller`" /qn /norestart" -Wait -NoNewWindow
-    
-    # 刷新环境变量
-    $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
-    
-    $nodeVersion = node --version 2>$null
-    if ($nodeVersion) {
-        Write-Host "Node.js $nodeVersion 安装成功!" -ForegroundColor Green
-    } else {
-        Write-Host "Node.js 安装可能需要重启 PowerShell，请关闭后重新打开 PowerShell 再运行此脚本" -ForegroundColor Red
-        exit 1
-    }
+# ========== 1. 安装 Node.js ==========
+Write-Host "`n[1/6] 检查 Node.js..." -ForegroundColor Yellow
+$hasNode = $false
+try { $null = node --version 2>$null; $hasNode = $true } catch {}
+if (-not $hasNode) {
+    Write-Host "  下载 Node.js..." -ForegroundColor Gray
+    Invoke-WebRequest -Uri "https://npmmirror.com/mirrors/node/v20.18.0/node-v20.18.0-x64.msi" -OutFile "C:\node.msi" -UseBasicParsing
+    Write-Host "  安装中..." -ForegroundColor Gray
+    Start-Process msiexec.exe -ArgumentList "/i C:\node.msi /qn /norestart" -Wait -NoNewWindow
+    Refresh-Path
+    Write-Host "  Node.js 安装完成!" -ForegroundColor Green
 } else {
-    Write-Host "Node.js $nodeVersion 已安装" -ForegroundColor Green
+    Write-Host "  已安装: $(node --version)" -ForegroundColor Green
 }
 
-# Step 2: 检查/安装 Git
-Write-Host "`n[2/5] 检查 Git..." -ForegroundColor Yellow
-$gitVersion = $null
-try { $gitVersion = git --version 2>$null } catch {}
-
-if (-not $gitVersion) {
-    Write-Host "Git 未安装，正在下载安装..." -ForegroundColor Yellow
-    $gitUrl = "https://npmmirror.com/mirrors/git-for-windows/v2.47.0.windows.2/Git-2.47.0.2-64-bit.exe"
-    $gitInstaller = "$env:TEMP\git-installer.exe"
-    
-    Invoke-WebRequest -Uri $gitUrl -OutFile $gitInstaller -UseBasicParsing
-    
-    Write-Host "正在安装 Git（静默模式）..." -ForegroundColor Yellow
-    Start-Process $gitInstaller -ArgumentList "/VERYSILENT /NORESTART /NOCANCEL /SP- /CLOSEAPPLICATIONS /RESTARTAPPLICATIONS" -Wait -NoNewWindow
-    
-    $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
-    
-    $gitVersion = git --version 2>$null
-    if ($gitVersion) {
-        Write-Host "Git 安装成功!" -ForegroundColor Green
-    } else {
-        Write-Host "Git 安装可能需要重启 PowerShell" -ForegroundColor Red
-        exit 1
-    }
+# ========== 2. 安装 Git ==========
+Write-Host "`n[2/6] 检查 Git..." -ForegroundColor Yellow
+$hasGit = $false
+try { $null = git --version 2>$null; $hasGit = $true } catch {}
+if (-not $hasGit) {
+    Write-Host "  下载 Git..." -ForegroundColor Gray
+    Invoke-WebRequest -Uri "https://npmmirror.com/mirrors/git-for-windows/v2.47.0.windows.2/Git-2.47.0.2-64-bit.exe" -OutFile "C:\git.exe" -UseBasicParsing
+    Write-Host "  安装中..." -ForegroundColor Gray
+    Start-Process "C:\git.exe" -ArgumentList "/VERYSILENT /NORESTART /NOCANCEL /SP-" -Wait -NoNewWindow
+    Refresh-Path
+    Write-Host "  Git 安装完成!" -ForegroundColor Green
 } else {
-    Write-Host "Git $gitVersion 已安装" -ForegroundColor Green
+    Write-Host "  已安装: $(git --version)" -ForegroundColor Green
 }
 
-# Step 3: 克隆项目
-Write-Host "`n[3/5] 克隆项目代码..." -ForegroundColor Yellow
-$projectDir = "C:\gps-tracker"
+# ========== 3. 安装 Python (sqlite3 编译需要) ==========
+Write-Host "`n[3/6] 检查 Python..." -ForegroundColor Yellow
+$hasPython = $false
+try { $null = python --version 2>$null; $hasPython = $true } catch {}
+if (-not $hasPython) {
+    Write-Host "  下载 Python..." -ForegroundColor Gray
+    Invoke-WebRequest -Uri "https://mirrors.huaweicloud.com/python/3.12.0/python-3.12.0-amd64.exe" -OutFile "C:\python.exe" -UseBasicParsing
+    Write-Host "  安装中..." -ForegroundColor Gray
+    Start-Process "C:\python.exe" -ArgumentList "/quiet InstallAllUsers=1 PrependPath=1" -Wait -NoNewWindow
+    Refresh-Path
+    Write-Host "  Python 安装完成!" -ForegroundColor Green
+} else {
+    Write-Host "  已安装: $(python --version 2>&1)" -ForegroundColor Green
+}
 
-if (Test-Path $projectDir) {
-    Write-Host "项目目录已存在，拉取最新代码..." -ForegroundColor Yellow
-    Set-Location $projectDir
+# 最终刷新 PATH
+Refresh-Path
+
+# ========== 4. 克隆/更新项目 ==========
+Write-Host "`n[4/6] 准备项目代码..." -ForegroundColor Yellow
+if (Test-Path "$PROJECT_DIR\.git") {
+    Write-Host "  拉取最新代码..." -ForegroundColor Gray
+    Set-Location $PROJECT_DIR
     git pull origin master 2>&1
 } else {
-    git clone https://github.com/yangfan222/gps-tracker.git $projectDir 2>&1
-    Set-Location $projectDir
+    if (Test-Path $PROJECT_DIR) { Remove-Item $PROJECT_DIR -Recurse -Force }
+    Write-Host "  克隆项目..." -ForegroundColor Gray
+    git clone $REPO_URL $PROJECT_DIR 2>&1
+    Set-Location $PROJECT_DIR
 }
-Write-Host "代码准备完成!" -ForegroundColor Green
+Write-Host "  代码准备完成!" -ForegroundColor Green
 
-# Step 4: 安装依赖并构建
-Write-Host "`n[4/5] 安装依赖并构建项目..." -ForegroundColor Yellow
-
-# 设置 npm 镜像加速
+# ========== 5. 安装依赖 + 构建 ==========
+Write-Host "`n[5/6] 安装依赖并构建..." -ForegroundColor Yellow
 npm config set registry https://registry.npmmirror.com
 
-Write-Host "安装前端依赖..." -ForegroundColor Yellow
-Set-Location "$projectDir\frontend"
-npm install 2>&1
+Write-Host "  [前端] 安装依赖..." -ForegroundColor Gray
+Set-Location "$PROJECT_DIR\frontend"
+npm install --legacy-peer-deps 2>&1
 
-Write-Host "构建前端..." -ForegroundColor Yellow
+Write-Host "  [前端] 构建..." -ForegroundColor Gray
 npm run build:h5 2>&1
 
-Write-Host "安装后端依赖..." -ForegroundColor Yellow
-Set-Location "$projectDir\backend"
-npm install 2>&1
+Write-Host "  [后端] 安装依赖..." -ForegroundColor Gray
+Set-Location "$PROJECT_DIR\backend"
+npm install --legacy-peer-deps 2>&1
 
-Write-Host "构建后端..." -ForegroundColor Yellow
+Write-Host "  [后端] 构建..." -ForegroundColor Gray
 npm run build 2>&1
 
-Write-Host "构建完成!" -ForegroundColor Green
+Write-Host "  构建全部完成!" -ForegroundColor Green
 
-# Step 5: 启动服务
-Write-Host "`n[5/5] 启动 GPS Tracker 服务..." -ForegroundColor Yellow
-Set-Location "$projectDir\backend"
+# ========== 6. 启动服务 ==========
+Write-Host "`n[6/6] 启动服务..." -ForegroundColor Yellow
 
-# 先停止已有的进程
+# 停止旧进程
 Get-Process -Name "node" -ErrorAction SilentlyContinue | Stop-Process -Force -ErrorAction SilentlyContinue
 Start-Sleep -Seconds 2
 
-# 设置环境变量
+# 配置防火墙
+netsh advfirewall firewall delete rule name="GPS Tracker" >$null 2>&1
+netsh advfirewall firewall add rule name="GPS Tracker" dir=in action=allow protocol=tcp localport=3000 >$null 2>&1
+
+# 启动
+Set-Location "$PROJECT_DIR\backend"
 $env:PORT = "3000"
 $env:NODE_ENV = "production"
 
-# 启动服务
-Write-Host "`n========================================" -ForegroundColor Cyan
-Write-Host "  正在启动服务..." -ForegroundColor Cyan
-Write-Host "  公网访问地址: http://1.94.48.15:3000" -ForegroundColor Green
-Write-Host "  用户名: 123 / admin" -ForegroundColor Green
-Write-Host "  密码: 123456 / admin123" -ForegroundColor Green
-Write-Host "========================================" -ForegroundColor Cyan
+Write-Host ""
+Write-Host "==========================================" -ForegroundColor Cyan
+Write-Host "  部署成功!" -ForegroundColor Green
+Write-Host "==========================================" -ForegroundColor Cyan
+Write-Host "  公网地址: http://${SERVER_IP}:3000" -ForegroundColor Green
+Write-Host "  用户名: admin    密码: admin123" -ForegroundColor Green
+Write-Host "  用户名: 123      密码: 123456" -ForegroundColor Green
+Write-Host "  按 Ctrl+C 停止服务" -ForegroundColor Gray
+Write-Host "==========================================" -ForegroundColor Cyan
+Write-Host ""
 
 node dist/main
