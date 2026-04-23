@@ -16,9 +16,7 @@ import { WebsocketModule } from './websocket/websocket.module';
 import { SeedController } from './seed/seed.controller';
 import { Device } from './entities/device.entity';
 import { Location } from './entities/location.entity';
-import { Geofence } from './entities/geofence.entity';
 import { Alarm } from './entities/alarm.entity';
-import { SimCard } from './entities/sim-card.entity';
 
 @Module({
   imports: [
@@ -33,7 +31,7 @@ import { SimCard } from './entities/sim-card.entity';
       entities: [__dirname + '/entities/*.entity{.ts,.js}'],
       synchronize: true,
     }),
-    TypeOrmModule.forFeature([Device, Location, Geofence, Alarm, SimCard]),
+    TypeOrmModule.forFeature([Device, Location, Alarm]),
     AuthModule,
     DeviceModule,
     LocationModule,

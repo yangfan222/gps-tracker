@@ -3,18 +3,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Device } from '../entities/device.entity';
 import { Location } from '../entities/location.entity';
-import { Geofence } from '../entities/geofence.entity';
 import { Alarm } from '../entities/alarm.entity';
-import { SimCard } from '../entities/sim-card.entity';
 
 @Controller('seed')
 export class SeedController {
   constructor(
     @InjectRepository(Device) private deviceRepo: Repository<Device>,
     @InjectRepository(Location) private locationRepo: Repository<Location>,
-    @InjectRepository(Geofence) private geofenceRepo: Repository<Geofence>,
     @InjectRepository(Alarm) private alarmRepo: Repository<Alarm>,
-    @InjectRepository(SimCard) private simCardRepo: Repository<SimCard>,
   ) {}
 
   @Post()
@@ -152,25 +148,6 @@ export class SeedController {
 
     await this.locationRepo.save(locations);
 
-    // === 电子围栏 ===
-    await this.geofenceRepo.save([
-      {
-        deviceId: 'T808202401', name: '公司', type: 'circle',
-        centerLat: 39.9219, centerLng: 116.4435, radius: 500,
-        entryAlarm: false, exitAlarm: true, enabled: true,
-      },
-      {
-        deviceId: 'T808202401', name: '家', type: 'circle',
-        centerLat: 39.9150, centerLng: 116.4050, radius: 300,
-        entryAlarm: true, exitAlarm: false, enabled: true,
-      },
-      {
-        deviceId: 'F36GPS0001', name: '朝阳公园活动范围', type: 'circle',
-        centerLat: 39.9340, centerLng: 116.4175, radius: 800,
-        entryAlarm: false, exitAlarm: true, enabled: true,
-      },
-    ]);
-
     // === 告警 ===
     await this.alarmRepo.save([
       {
@@ -205,35 +182,11 @@ export class SeedController {
       },
     ]);
 
-    // === SIM 卡 ===
-    await this.simCardRepo.save([
-      {
-        deviceId: 'T808202401', simNumber: '14712345678', iccid: '89860121801234567890',
-        packageName: '30M*36月', totalData: 1080, usedData: 356.5,
-        status: 'active', totalSms: 100, usedSms: 12,
-        activationTime: new Date('2025-06-15'), expiryTime: new Date('2028-06-15'),
-      },
-      {
-        deviceId: 'T808202402', simNumber: '14787654321', iccid: '89860121809876543210',
-        packageName: '30M*12月', totalData: 360, usedData: 180.2,
-        status: 'active', totalSms: 50, usedSms: 8,
-        activationTime: new Date('2026-01-01'), expiryTime: new Date('2027-01-01'),
-      },
-      {
-        deviceId: 'F36GPS0001', simNumber: '14700001111', iccid: '89860121800001111000',
-        packageName: '50M*24月', totalData: 1200, usedData: 89.7,
-        status: 'active', totalSms: 200, usedSms: 5,
-        activationTime: new Date('2026-03-01'), expiryTime: new Date('2028-03-01'),
-      },
-    ]);
-
     return {
       message: 'Seed completed!',
       devices: 3,
       locations: locations.length,
-      geofences: 3,
       alarms: 5,
-      simCards: 3,
     };
   }
 }
