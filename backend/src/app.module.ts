@@ -21,8 +21,9 @@ import { WebsocketModule } from './websocket/websocket.module';
       exclude: ['/api/(.*)'],
     }),
     TypeOrmModule.forRoot({
-      type: 'sqlite',
-      database: 'gps_tracker.db',
+      type: 'sqljs',
+      location: 'gps_tracker.db',
+      autoSave: true,
       entities: [__dirname + '/entities/*.entity{.ts,.js}'],
       synchronize: true,
     }),

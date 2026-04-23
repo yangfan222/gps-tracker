@@ -5,8 +5,7 @@ dist/
 *.apk
 *.zip
 *.rar
-*.png
-*.jpg
+# 不排除前端资源图片
 .DS_Store
 .env
 jdk17/
