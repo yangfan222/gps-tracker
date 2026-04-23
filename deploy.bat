@@ -17,9 +17,16 @@ cd /d "%PROJECT_DIR%" || (
 
 echo [1/6] Pulling latest code from GitHub...
 echo --------------------------------------------
-git pull origin master
+git config http.postBuffer 524288000
+git fetch --depth=1 origin master
 if errorlevel 1 (
-    echo [ERROR] Git pull failed!
+    echo [ERROR] Git fetch failed!
+    pause
+    exit /b 1
+)
+git reset --hard origin/master
+if errorlevel 1 (
+    echo [ERROR] Git reset failed!
     pause
     exit /b 1
 )
