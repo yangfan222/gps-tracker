@@ -5,9 +5,10 @@ import Icon from './Icon'
 interface NavBarProps {
   title: string
   back?: boolean
+  rightContent?: React.ReactNode
 }
 
-export default function NavBar({ title, back = true }: NavBarProps) {
+export default function NavBar({ title, back = true, rightContent }: NavBarProps) {
   const handleBack = () => {
     const pages = Taro.getCurrentPages()
     if (pages.length > 1) {
@@ -19,13 +20,17 @@ export default function NavBar({ title, back = true }: NavBarProps) {
 
   return (
     <View className='navbar'>
-      {back && (
+      {back ? (
         <View className='navbar-back' onClick={handleBack}>
-          <Icon name='chevron-left' size={40} color='#333' />
+          <Icon name='chevron-left' size={48} color='#333' />
         </View>
+      ) : (
+        <View className='navbar-right' />
       )}
       <Text className='navbar-title'>{title}</Text>
-      <View className='navbar-right' />
+      <View className='navbar-right'>
+        {rightContent}
+      </View>
     </View>
   )
 }

@@ -78,7 +78,31 @@ export default function IndexPage() {
     return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')} ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}:${String(d.getSeconds()).padStart(2, '0')}`
   }
 
-  const getStatusColor = (status: string) => status === 'online' ? '#52c41a' : '#999'
+  const handleNavigate = () => {
+    if (!currentDevice?.latitude || !currentDevice?.longitude) {
+      Taro.showToast({ title: '暂无位置信息', icon: 'none' })
+      return
+    }
+    Taro.showActionSheet({
+      itemList: ['高德地图', '百度地图', '腾讯地图'],
+      success: (res) => {
+        const lat = currentDevice.latitude
+        const lng = currentDevice.longitude
+        const name = currentDevice.deviceName || currentDevice.deviceId
+        let url = ''
+        if (res.tapIndex === 0) {
+          url = `https://uri.amap.com/marker?position=${lng},${lat}&name=${name}`
+        } else if (res.tapIndex === 1) {
+          url = `http://api.map.baidu.com/marker?location=${lat},${lng}&title=${name}&output=html`
+        } else {
+          url = `https://apis.map.qq.com/uri/v1/marker?marker=coord:${lat},${lng};title:${name}`
+        }
+        if (typeof window !== 'undefined') {
+          window.open(url, '_blank')
+        }
+      }
+    })
+  }
 
   return (
     <View className='index-page'>
@@ -104,9 +128,9 @@ export default function IndexPage() {
                 </View>
               ) : (
                 <View className='no-device'>
-                  <Icon name='map-pin' size={80} color='#ccc' />
+                  <Icon name='map-pin' size={120} color='#ccc' />
                   <Text className='no-device-text'>暂无设备</Text>
-                  <Text className='no-device-hint'>请先添加定位设备</Text>
+                  <Text className='no-device-hint'>请先添加您的定位设备</Text>
                 </View>
               )}
             </View>
@@ -115,17 +139,18 @@ export default function IndexPage() {
 
         <View className='map-controls'>
           <View className='control-btn' onClick={handleLocateCommand}>
-            <Icon name='crosshair' size={36} color='#1890ff' />
+            <Icon name='crosshair' size={44} color='#00C853' />
             <Text className='control-text'>定位</Text>
           </View>
           <View className='control-btn' onClick={refreshLocation}>
-            <Icon name='refresh-cw' size={36} color='#1890ff' />
+            <Icon name='refresh-cw' size={44} color='#00C853' />
             <Text className='control-text'>刷新</Text>
           </View>
         </View>
 
         {devices.length > 1 && (
           <View className='device-switch' onClick={() => setShowDeviceList(!showDeviceList)}>
+            <Icon name='smartphone' size={28} color='#00C853' />
             <Text className='switch-text'>{currentDevice?.deviceName || '选择设备'}</Text>
             <Icon name='chevron-down' size={24} color='#999' />
           </View>
@@ -140,9 +165,14 @@ export default function IndexPage() {
                   className={`device-item ${currentDevice?.deviceId === d.deviceId ? 'active' : ''}`}
                   onClick={() => { setCurrentDevice(d); setShowDeviceList(false) }}
                 >
-                  <Text className='device-name'>{d.deviceName}</Text>
-                  <Text className='device-id'>{d.deviceId}</Text>
-                  <View className={`device-status ${d.status}`} />
+                  <View className={`device-status-dot ${d.status}`} />
+                  <View className='device-info'>
+                    <Text className='device-name'>{d.deviceName}</Text>
+                    <Text className='device-id'>{d.deviceId}</Text>
+                  </View>
+                  {currentDevice?.deviceId === d.deviceId && (
+                    <Icon name='check' size={32} color='#00C853' />
+                  )}
                 </View>
               ))}
             </View>
@@ -153,30 +183,33 @@ export default function IndexPage() {
       {currentDevice && (
         <View className='device-panel'>
           <View className='panel-handle' />
-          <View className='panel-status'>
-            <View className='status-left'>
-              <Text className='time-text'>{formatTime(currentDevice.lastOnlineTime)}</Text>
-              <View className='status-badge' style={{ backgroundColor: getStatusColor(currentDevice.status) }}>
-                <Text className='status-text'>{currentDevice.status === 'online' ? '在线' : '离线'}</Text>
+
+          <View className='panel-header'>
+            <View className='header-left'>
+              <Text className='device-name-text'>{currentDevice.deviceName || currentDevice.deviceId}</Text>
+              <View className={`online-badge ${currentDevice.status}`}>
+                <View className='online-dot' />
+                <Text className='online-text'>{currentDevice.status === 'online' ? '在线' : '离线'}</Text>
               </View>
             </View>
-            <View className='status-right'>
-              <Icon name='signal' size={24} color='#666' />
-              <Text className='signal-text'>{currentDevice.signalStrength || 0}%</Text>
-              <Icon name='battery' size={24} color='#666' />
-              <Text className='battery-text'>{currentDevice.batteryLevel || 0}%</Text>
+            <View className='header-right'>
+              <View className='status-item'>
+                <Icon name='signal' size={28} color='#666' />
+                <Text className='status-val'>{currentDevice.signalStrength || 0}%</Text>
+              </View>
+              <View className='status-item'>
+                <Icon name='battery' size={28} color={currentDevice.batteryLevel > 20 ? '#00C853' : '#FF3D00'} />
+                <Text className='status-val'>{currentDevice.batteryLevel || 0}%</Text>
+              </View>
             </View>
           </View>
 
+          <View className='panel-time'>
+            <Icon name='clock' size={22} color='#999' />
+            <Text className='time-text'>{formatTime(currentDevice.lastOnlineTime)}</Text>
+          </View>
+
           <View className='panel-info'>
-            <View className='info-row'>
-              <Text className='info-label'>设备ID</Text>
-              <Text className='info-value'>{currentDevice.deviceId}</Text>
-            </View>
-            <View className='info-row'>
-              <Text className='info-label'>定位方式</Text>
-              <Text className='info-value'>{currentDevice.locationType || 'GPS'}</Text>
-            </View>
             <View className='info-row'>
               <Text className='info-label'>速度</Text>
               <Text className='info-value'>{currentDevice.speed || 0} km/h</Text>
@@ -185,43 +218,36 @@ export default function IndexPage() {
               <Text className='info-label'>今日里程</Text>
               <Text className='info-value'>{currentDevice.dailyMileage || 0} km</Text>
             </View>
-            <View className='info-row'>
-              <Text className='info-label'>工作模式</Text>
-              <Text className='info-value'>
-                {currentDevice.workMode === 'normal' ? '常规30s' :
-                 currentDevice.workMode === 'powersave' ? '省电5min' : '超级省电'}
-              </Text>
-            </View>
             <View className='info-row full'>
               <Text className='info-label'>地址</Text>
-              <Text className='info-value'>{currentDevice.address || '获取中...'}</Text>
+              <Text className='info-value address'>{currentDevice.address || '获取中...'}</Text>
             </View>
           </View>
 
           <View className='panel-actions'>
             <View className='action-btn' onClick={() => Taro.navigateTo({ url: `/pages/track/index?deviceId=${currentDevice.deviceId}` })}>
               <View className='action-icon track'>
-                <Icon name='route' size={32} color='#fff' />
+                <Icon name='route' size={40} color='#fff' />
               </View>
               <Text className='action-text'>轨迹</Text>
             </View>
             <View className='action-btn' onClick={() => Taro.navigateTo({ url: `/pages/settings/index?deviceId=${currentDevice.deviceId}` })}>
               <View className='action-icon settings'>
-                <Icon name='settings' size={32} color='#fff' />
+                <Icon name='settings' size={40} color='#fff' />
               </View>
               <Text className='action-text'>设置</Text>
             </View>
             <View className='action-btn' onClick={() => Taro.navigateTo({ url: `/pages/detail/index?deviceId=${currentDevice.deviceId}` })}>
               <View className='action-icon detail'>
-                <Icon name='info' size={32} color='#fff' />
+                <Icon name='info' size={40} color='#fff' />
               </View>
               <Text className='action-text'>详情</Text>
             </View>
-            <View className='action-btn' onClick={() => Taro.navigateTo({ url: `/pages/share/index?deviceId=${currentDevice.deviceId}` })}>
-              <View className='action-icon share'>
-                <Icon name='share' size={32} color='#fff' />
+            <View className='action-btn' onClick={handleNavigate}>
+              <View className='action-icon navigate'>
+                <Icon name='navigation' size={40} color='#fff' />
               </View>
-              <Text className='action-text'>分享</Text>
+              <Text className='action-text'>导航</Text>
             </View>
           </View>
         </View>
@@ -233,7 +259,7 @@ export default function IndexPage() {
             className='add-device-btn'
             onClick={() => Taro.navigateTo({ url: '/pages/add-device/index' })}
           >
-            <Icon name='plus' size={32} color='#fff' />
+            <Icon name='plus' size={36} color='#fff' />
             <Text className='add-text'>添加设备</Text>
           </View>
         </View>

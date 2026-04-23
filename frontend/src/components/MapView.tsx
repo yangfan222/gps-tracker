@@ -102,10 +102,10 @@ export default function MapView({ latitude, longitude, deviceName, zoom = 15, tr
         className: 'device-marker-icon',
         html: `<div style="
           width: 22px; height: 22px;
-          background: #1890ff;
+          background: #00C853;
           border: 3px solid #fff;
           border-radius: 50%;
-          box-shadow: 0 2px 10px rgba(24,144,255,0.5);
+          box-shadow: 0 2px 10px rgba(0,200,83,0.5);
         "></div>`,
         iconSize: [22, 22],
         iconAnchor: [11, 11],
@@ -114,7 +114,7 @@ export default function MapView({ latitude, longitude, deviceName, zoom = 15, tr
     }
 
     markerRef.current.bindPopup(
-      `<div style="font-size:13px;line-height:1.6">
+      `<div style="font-size:14px;line-height:1.6">
         <b>${deviceName || 'Device'}</b><br/>
         Lat: ${latitude.toFixed(6)}<br/>
         Lng: ${longitude.toFixed(6)}
@@ -146,7 +146,7 @@ export default function MapView({ latitude, longitude, deviceName, zoom = 15, tr
 
     // Gradient-like polyline
     polylineRef.current = L.polyline(latlngs, {
-      color: '#1890ff',
+      color: '#00C853',
       weight: 4,
       opacity: 0.85,
       smoothFactor: 1,

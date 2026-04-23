@@ -120,7 +120,7 @@ export default function SimCardPage() {
           )}
 
           <View className='action-section'>
-            <View className='recharge-btn' onClick={() => Taro.showToast({ title: '充值功能开发中', icon: 'none' })}>
+            <View className='recharge-btn' onClick={() => Taro.navigateTo({ url: `/pages/recharge/index?deviceId=${deviceId}&simNumber=${simCard?.simNumber || ''}` })}>
               <Text className='btn-text'>去充值</Text>
             </View>
           </View>

@@ -1,3 +1,5 @@
+const path = require('path')
+
 const config = {
   projectName: 'gps-tracker',
   date: '2024-1-1',
@@ -18,6 +20,11 @@ const config = {
   },
   framework: 'react',
   compiler: 'webpack5',
+  sass: {
+    resource: [
+      path.resolve(__dirname, '..', 'src/styles/_variables.scss')
+    ]
+  },
   mini: {
     postcss: {
       pxtransform: { enable: true, config: {} },
@@ -37,7 +44,7 @@ const config = {
     htmlPluginOption: {
       title: 'GPS定位器',
       filename: 'index.html',
-      template: require('path').join(__dirname, '..', 'src/index.html'),
+      template: path.join(__dirname, '..', 'src/index.html'),
     },
     postcss: {
       autoprefixer: { enable: true, config: {} },

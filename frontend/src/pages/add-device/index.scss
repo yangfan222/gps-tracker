@@ -1,13 +1,13 @@
 .add-device-page {
   min-height: 100vh;
-  background: #f5f5f5;
+  background: $bg-page;
 
   .steps {
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 40px 60px;
-    background: #fff;
+    background: $bg-card;
 
     .step {
       display: flex; flex-direction: column; align-items: center;
@@ -16,14 +16,14 @@
         width: 48px; height: 48px; border-radius: 50%;
         background: #e0e0e0; display: flex;
         align-items: center; justify-content: center; margin-bottom: 8px;
-        .dot-text { color: #999; font-size: 24px; }
+        .dot-text { color: $text-tertiary; font-size: 24px; }
       }
 
-      .step-label { font-size: 24px; color: #999; }
+      .step-label { font-size: 24px; color: $text-tertiary; }
 
       &.active {
-        .step-dot { background: #1890ff; .dot-text { color: #fff; } }
-        .step-label { color: #1890ff; }
+        .step-dot { background: $primary; .dot-text { color: #fff; } }
+        .step-label { color: $primary; }
       }
     }
 
@@ -37,54 +37,55 @@
     padding: 30px 20px;
 
     .scan-section {
-      background: #fff; border-radius: 16px;
+      background: $bg-card; border-radius: $radius-md;
       padding: 40px; text-align: center;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 
       .scan-btn {
         display: flex; flex-direction: column; align-items: center;
         padding: 30px; margin-bottom: 16px;
         .scan-icon { font-size: 80px; margin-bottom: 16px; }
-        .scan-text { font-size: 30px; color: #1890ff; font-weight: 500; }
+        .scan-text { font-size: 30px; color: $primary; font-weight: 500; }
       }
 
-      .scan-hint { font-size: 24px; color: #999; }
+      .scan-hint { font-size: 24px; color: $text-tertiary; }
     }
 
     .divider-with-text {
       display: flex; align-items: center; padding: 30px 0;
       .line { flex: 1; height: 1px; background: #e0e0e0; }
-      .divider-text { padding: 0 20px; font-size: 26px; color: #999; }
+      .divider-text { padding: 0 20px; font-size: 26px; color: $text-tertiary; }
     }
 
     .manual-section {
-      background: #fff; border-radius: 16px;
-      padding: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      background: $bg-card; border-radius: $radius-md;
+      padding: 30px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 
-      .section-title { display: block; font-size: 28px; color: #333; margin-bottom: 20px; }
+      .section-title { display: block; font-size: 28px; color: $text-primary; margin-bottom: 20px; }
 
       .device-input {
-        background: #f5f5f5; border-radius: 12px;
+        background: $bg-page; border-radius: $radius-sm;
         padding: 20px; font-size: 28px; margin-bottom: 24px;
       }
 
       .next-btn {
-        height: 80px; background: #1890ff; border-radius: 40px;
+        height: 80px; background: $primary; border-radius: 40px;
         display: flex; align-items: center; justify-content: center;
+        &:active { background: $primary-dark; }
         .btn-text { color: #fff; font-size: 28px; }
         &.disabled { opacity: 0.5; }
       }
     }
 
     .form-section {
-      background: #fff; border-radius: 16px;
-      padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      background: $bg-card; border-radius: $radius-md;
+      padding: 24px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 
       .form-item {
-        padding: 16px 0; border-bottom: 1px solid #f5f5f5;
+        padding: 16px 0; border-bottom: 1px solid $bg-page;
         &:last-child { border-bottom: none; }
-        .form-label { display: block; font-size: 24px; color: #999; margin-bottom: 8px; }
-        .form-value { font-size: 28px; color: #333; }
+        .form-label { display: block; font-size: 24px; color: $text-tertiary; margin-bottom: 8px; }
+        .form-value { font-size: 28px; color: $text-primary; }
         .form-input { font-size: 28px; background: #f9f9f9; padding: 12px 16px; border-radius: 8px; }
       }
     }
@@ -98,8 +99,8 @@
         .btn-text { font-size: 28px; }
       }
 
-      .back-btn { background: #f5f5f5; .btn-text { color: #666; } }
-      .confirm-btn { background: #1890ff; .btn-text { color: #fff; } &.disabled { opacity: 0.6; } }
+      .back-btn { background: $bg-page; .btn-text { color: $text-secondary; } }
+      .confirm-btn { background: $primary; &:active { background: $primary-dark; } .btn-text { color: #fff; } &.disabled { opacity: 0.6; } }
     }
   }
 }

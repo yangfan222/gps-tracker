@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { View, Text, Picker } from '@tarojs/components'
+import { View, Text, Picker, Slider } from '@tarojs/components'
 import Taro, { useRouter } from '@tarojs/taro'
 import { trackApi } from '../../services/api'
 import MapView from '../../components/MapView'
@@ -38,6 +38,14 @@ export default function TrackPage() {
     setLoading(false)
   }
 
+  const setQuickDate = (days: number) => {
+    const end = new Date()
+    const start = new Date()
+    start.setDate(start.getDate() - days)
+    setStartDate(start.toISOString().split('T')[0])
+    setEndDate(end.toISOString().split('T')[0])
+  }
+
   const playTrack = () => {
     if (trackPoints.length === 0) return
     setPlaying(true)
@@ -65,7 +73,6 @@ export default function TrackPage() {
   }
 
   const currentPoint = trackPoints[currentIndex]
-  // Show track up to current playback position
   const visibleTrack = trackPoints.slice(0, currentIndex + 1)
 
   return (
@@ -83,7 +90,7 @@ export default function TrackPage() {
           <View className='map-placeholder'>
             {trackPoints.length > 0 ? (
               <View className='track-info'>
-                <Icon name='route' size={64} color='#1890ff' />
+                <Icon name='route' size={64} color='#00C853' />
                 <Text className='track-count'>共 {trackPoints.length} 个轨迹点</Text>
               </View>
             ) : (
@@ -97,6 +104,18 @@ export default function TrackPage() {
       </View>
 
       <View className='control-panel'>
+        <View className='quick-dates'>
+          <View className='quick-btn' onClick={() => setQuickDate(0)}>
+            <Text className='quick-text'>今天</Text>
+          </View>
+          <View className='quick-btn' onClick={() => setQuickDate(1)}>
+            <Text className='quick-text'>昨天</Text>
+          </View>
+          <View className='quick-btn' onClick={() => setQuickDate(7)}>
+            <Text className='quick-text'>近7天</Text>
+          </View>
+        </View>
+
         <View className='date-selectors'>
           <Picker mode='date' value={startDate} onChange={e => setStartDate(e.detail.value)}>
             <View className='date-btn'>
@@ -118,24 +137,44 @@ export default function TrackPage() {
 
         {trackPoints.length > 0 && (
           <View className='playback-controls'>
+            <Slider
+              className='track-slider'
+              min={0}
+              max={trackPoints.length - 1}
+              value={currentIndex}
+              activeColor='#00C853'
+              backgroundColor='#e0e0e0'
+              blockSize={20}
+              onChange={e => { stopPlay(); setCurrentIndex(e.detail.value) }}
+            />
+
             <View className='play-btns'>
               <View className='play-btn' onClick={() => { stopPlay(); setCurrentIndex(Math.max(0, currentIndex - 1)) }}>
-                <Icon name='skip-back' size={32} color='#333' />
+                <Icon name='skip-back' size={36} color='#333' />
               </View>
               <View className='play-btn main' onClick={playing ? stopPlay : playTrack}>
-                <Icon name={playing ? 'pause' : 'play'} size={36} color='#fff' />
+                <Icon name={playing ? 'pause' : 'play'} size={40} color='#fff' />
               </View>
               <View className='play-btn' onClick={() => { stopPlay(); setCurrentIndex(Math.min(trackPoints.length - 1, currentIndex + 1)) }}>
-                <Icon name='skip-forward' size={32} color='#333' />
+                <Icon name='skip-forward' size={36} color='#333' />
               </View>
             </View>
             <Text className='progress-text'>{currentIndex + 1} / {trackPoints.length}</Text>
 
             {currentPoint && (
               <View className='point-detail'>
-                <Text className='detail-text'>时间: {formatTime(currentPoint.createdAt)}</Text>
-                <Text className='detail-text'>速度: {currentPoint.speed || 0} km/h</Text>
-                <Text className='detail-text'>方式: {currentPoint.locationType || 'GPS'}</Text>
+                <View className='detail-item'>
+                  <Icon name='clock' size={22} color='#999' />
+                  <Text className='detail-text'>{formatTime(currentPoint.createdAt)}</Text>
+                </View>
+                <View className='detail-item'>
+                  <Icon name='activity' size={22} color='#999' />
+                  <Text className='detail-text'>{currentPoint.speed || 0} km/h</Text>
+                </View>
+                <View className='detail-item'>
+                  <Icon name='satellite' size={22} color='#999' />
+                  <Text className='detail-text'>{currentPoint.locationType || 'GPS'}</Text>
+                </View>
               </View>
             )}
           </View>

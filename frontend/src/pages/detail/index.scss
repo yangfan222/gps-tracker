@@ -1,20 +1,20 @@
 .detail-page {
   min-height: 100vh;
-  background: #f5f5f5;
+  background: $bg-page;
 
-  .loading { display: block; text-align: center; padding: 40px; color: #999; font-size: 28px; }
+  .loading { display: block; text-align: center; padding: 40px; color: $text-tertiary; font-size: 28px; }
 
   .info-group {
     margin: 20px;
-    background: #fff;
-    border-radius: 16px;
+    background: $bg-card;
+    border-radius: $radius-md;
     overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 
     .group-title {
       display: block;
       font-size: 26px;
-      color: #1890ff;
+      color: $primary;
       font-weight: 500;
       padding: 20px 24px 10px;
     }
@@ -24,12 +24,13 @@
       justify-content: space-between;
       align-items: center;
       padding: 18px 24px;
-      border-bottom: 1px solid #f5f5f5;
+      min-height: 56px;
+      border-bottom: 1px solid $bg-page;
 
       &:last-child { border-bottom: none; }
 
-      .info-label { font-size: 26px; color: #666; }
-      .info-value { font-size: 26px; color: #333; max-width: 60%; text-align: right; word-break: break-all; }
+      .info-label { font-size: 26px; color: $text-secondary; }
+      .info-value { font-size: 26px; color: $text-primary; max-width: 60%; text-align: right; word-break: break-all; }
     }
   }
 }

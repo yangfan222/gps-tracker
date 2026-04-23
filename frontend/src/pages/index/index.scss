@@ -22,7 +22,7 @@
         .map-content {
           .coord-text {
             font-size: 24px;
-            color: #666;
+            color: $text-secondary;
             display: block;
             margin-bottom: 40px;
           }
@@ -35,16 +35,16 @@
             .marker-dot {
               width: 32px;
               height: 32px;
-              background: #1890ff;
+              background: $primary;
               border-radius: 50%;
-              border: 4px solid rgba(24, 144, 255, 0.3);
-              box-shadow: 0 0 20px rgba(24, 144, 255, 0.4);
+              border: 4px solid rgba(0, 200, 83, 0.3);
+              box-shadow: 0 0 20px rgba(0, 200, 83, 0.4);
             }
 
             .marker-label {
               margin-top: 10px;
               font-size: 24px;
-              color: #333;
+              color: $text-primary;
               background: #fff;
               padding: 4px 16px;
               border-radius: 8px;
@@ -54,10 +54,15 @@
         }
 
         .no-device {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+
           .no-device-text {
             display: block;
-            font-size: 32px;
-            color: #999;
+            font-size: 34px;
+            color: $text-tertiary;
+            margin-top: 20px;
             margin-bottom: 10px;
           }
           .no-device-hint {
@@ -77,23 +82,24 @@
       gap: 16px;
 
       .control-btn {
-        width: 88px;
-        height: 88px;
+        width: 96px;
+        height: 96px;
         background: #fff;
-        border-radius: 16px;
+        border-radius: $radius-md;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
 
-        .control-icon {
-          font-size: 32px;
+        &:active {
+          transform: scale(0.92);
+          background: #f5f5f5;
         }
 
         .control-text {
           font-size: 20px;
-          color: #666;
+          color: $text-secondary;
           margin-top: 4px;
         }
       }
@@ -101,25 +107,27 @@
 
     .device-switch {
       position: absolute;
-      top: 100px;
-      left: 50%;
-      transform: translateX(-50%);
+      top: 24px;
+      left: 24px;
       background: #fff;
-      padding: 12px 30px;
+      padding: 14px 24px;
       border-radius: 30px;
-      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
       display: flex;
       align-items: center;
+      gap: 8px;
+
+      &:active {
+        background: #f5f5f5;
+      }
 
       .switch-text {
         font-size: 26px;
-        color: #333;
-        margin-right: 10px;
-      }
-
-      .switch-arrow {
-        font-size: 20px;
-        color: #999;
+        color: $text-primary;
+        max-width: 200px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
     }
 
@@ -134,11 +142,11 @@
 
       .device-list {
         position: absolute;
-        top: 160px;
-        left: 40px;
-        right: 40px;
+        top: 80px;
+        left: 24px;
+        right: 24px;
         background: #fff;
-        border-radius: 16px;
+        border-radius: $radius-lg;
         overflow: hidden;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 
@@ -146,32 +154,44 @@
           display: flex;
           align-items: center;
           padding: 24px 30px;
-          border-bottom: 1px solid #f0f0f0;
+          border-bottom: 1px solid $border-color;
+
+          &:active {
+            background: #f5f5f5;
+          }
 
           &.active {
-            background: #e6f7ff;
+            background: $primary-light;
           }
 
-          .device-name {
-            flex: 1;
-            font-size: 28px;
-            color: #333;
-          }
-
-          .device-id {
-            font-size: 24px;
-            color: #999;
-            margin-right: 16px;
-          }
-
-          .device-status {
+          .device-status-dot {
             width: 16px;
             height: 16px;
             border-radius: 50%;
-            background: #999;
+            background: $text-tertiary;
+            margin-right: 20px;
+            flex-shrink: 0;
 
             &.online {
-              background: #52c41a;
+              background: $primary;
+            }
+          }
+
+          .device-info {
+            flex: 1;
+
+            .device-name {
+              display: block;
+              font-size: 28px;
+              color: $text-primary;
+              font-weight: 500;
+            }
+
+            .device-id {
+              display: block;
+              font-size: 22px;
+              color: $text-tertiary;
+              margin-top: 4px;
             }
           }
         }
@@ -181,65 +201,103 @@
 
   .device-panel {
     background: #fff;
-    border-radius: 24px 24px 0 0;
+    border-radius: $radius-lg $radius-lg 0 0;
     box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.06);
-    padding: 24px;
-    padding-bottom: calc(24px + env(safe-area-inset-bottom));
+    padding: 16px 24px;
+    padding-bottom: calc(16px + env(safe-area-inset-bottom));
 
     .panel-handle {
       width: 40px;
       height: 6px;
       background: #e0e0e0;
       border-radius: 3px;
-      margin: 0 auto 16px;
+      margin: 0 auto 12px;
     }
 
-    .panel-status {
+    .panel-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 20px;
+      margin-bottom: 8px;
 
-      .status-left {
+      .header-left {
         display: flex;
         align-items: center;
+        gap: 12px;
 
-        .time-text {
-          font-size: 24px;
-          color: #666;
-          margin-right: 16px;
+        .device-name-text {
+          font-size: 32px;
+          font-weight: 600;
+          color: $text-primary;
         }
 
-        .status-badge {
-          padding: 4px 16px;
+        .online-badge {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          padding: 4px 14px;
           border-radius: 20px;
+          background: #f0f0f0;
 
-          .status-text {
+          &.online {
+            background: $primary-light;
+
+            .online-dot { background: $primary; }
+            .online-text { color: $primary-dark; }
+          }
+
+          .online-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: $text-tertiary;
+          }
+
+          .online-text {
             font-size: 22px;
-            color: #fff;
+            color: $text-tertiary;
           }
         }
       }
 
-      .status-right {
+      .header-right {
         display: flex;
-        gap: 20px;
+        align-items: center;
+        gap: 16px;
 
-        .signal-text, .battery-text {
-          font-size: 24px;
-          color: #666;
+        .status-item {
+          display: flex;
+          align-items: center;
+          gap: 4px;
+
+          .status-val {
+            font-size: 24px;
+            color: $text-secondary;
+          }
         }
+      }
+    }
+
+    .panel-time {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 12px;
+
+      .time-text {
+        font-size: 22px;
+        color: $text-tertiary;
       }
     }
 
     .panel-info {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 20px;
+      gap: 8px;
+      margin-bottom: 16px;
 
       .info-row {
-        width: calc(50% - 5px);
+        width: calc(50% - 4px);
         display: flex;
         align-items: center;
 
@@ -249,17 +307,24 @@
 
         .info-label {
           font-size: 24px;
-          color: #999;
+          color: $text-tertiary;
           margin-right: 12px;
           white-space: nowrap;
         }
 
         .info-value {
-          font-size: 24px;
-          color: #333;
+          font-size: 26px;
+          color: $text-primary;
+          font-weight: 500;
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
+
+          &.address {
+            font-size: 24px;
+            font-weight: 400;
+            color: $text-secondary;
+          }
         }
       }
     }
@@ -267,33 +332,38 @@
     .panel-actions {
       display: flex;
       justify-content: space-around;
-      padding-top: 20px;
-      border-top: 1px solid #f0f0f0;
+      padding-top: 16px;
+      border-top: 1px solid $border-color;
 
       .action-btn {
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding: 10px 20px;
+        padding: 8px 16px;
+
+        &:active {
+          opacity: 0.7;
+        }
 
         .action-icon {
-          width: 56px;
-          height: 56px;
-          border-radius: 14px;
+          width: 72px;
+          height: 72px;
+          border-radius: 18px;
           margin-bottom: 8px;
           display: flex;
           align-items: center;
           justify-content: center;
 
-          &.track { background: linear-gradient(135deg, #36cfc9, #13c2c2); }
-          &.settings { background: linear-gradient(135deg, #ffc069, #fa8c16); }
-          &.detail { background: linear-gradient(135deg, #85a5ff, #597ef7); }
-          &.share { background: linear-gradient(135deg, #95de64, #52c41a); }
+          &.track { background: linear-gradient(135deg, #00E676, #00C853); }
+          &.settings { background: linear-gradient(135deg, #FFAB40, #FF9100); }
+          &.detail { background: linear-gradient(135deg, #448AFF, #2979FF); }
+          &.navigate { background: linear-gradient(135deg, #64FFDA, #1DE9B6); }
         }
 
         .action-text {
           font-size: 24px;
-          color: #666;
+          color: $text-secondary;
+          font-weight: 500;
         }
       }
     }
@@ -306,12 +376,17 @@
     right: 40px;
 
     .add-device-btn {
-      height: 88px;
-      background: linear-gradient(135deg, #1890ff, #096dd9);
+      height: $tap-target;
+      background: linear-gradient(135deg, $primary, $primary-dark);
       border-radius: 44px;
       display: flex;
       align-items: center;
       justify-content: center;
+      gap: 10px;
+
+      &:active {
+        transform: scale(0.97);
+      }
 
       .add-text {
         color: #fff;

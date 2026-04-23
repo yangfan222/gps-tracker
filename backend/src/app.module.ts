@@ -11,6 +11,7 @@ import { GeofenceModule } from './geofence/geofence.module';
 import { AlarmModule } from './alarm/alarm.module';
 import { SimCardModule } from './sim-card/sim-card.module';
 import { ReportModule } from './report/report.module';
+import { ShareModule } from './share/share.module';
 import { TcpServerModule } from './tcp-server/tcp-server.module';
 import { WebsocketModule } from './websocket/websocket.module';
 import { SeedController } from './seed/seed.controller';
@@ -41,6 +42,7 @@ import { Alarm } from './entities/alarm.entity';
     AlarmModule,
     SimCardModule,
     ReportModule,
+    ShareModule,
     TcpServerModule,
     WebsocketModule,
   ],

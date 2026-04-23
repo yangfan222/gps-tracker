@@ -13,10 +13,12 @@ export default defineAppConfig({
     'pages/sim-card/index',
     'pages/add-device/index',
     'pages/share/index',
+    'pages/change-password/index',
+    'pages/recharge/index',
   ],
   tabBar: {
     color: '#999999',
-    selectedColor: '#1890ff',
+    selectedColor: '#00C853',
     backgroundColor: '#ffffff',
     borderStyle: 'black',
     list: [
@@ -42,7 +44,7 @@ export default defineAppConfig({
   },
   window: {
     backgroundTextStyle: 'light',
-    navigationBarBackgroundColor: '#1890ff',
+    navigationBarBackgroundColor: '#00C853',
     navigationBarTitleText: 'GPS定位器',
     navigationBarTextStyle: 'white',
   },

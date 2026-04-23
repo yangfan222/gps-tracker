@@ -1,0 +1,101 @@
+.recharge-page {
+  min-height: 100vh;
+  background: $bg-page;
+  padding-bottom: 200px;
+
+  .device-info {
+    margin: 20px 24px; padding: 24px 28px;
+    background: #fff; border-radius: $radius-lg;
+    display: flex; align-items: center; justify-content: space-between;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+
+    .info-left { display: flex; align-items: center; gap: 16px; }
+    .info-text { display: flex; flex-direction: column; }
+    .device-label { font-size: 22px; color: $text-hint; }
+    .device-id { font-size: 28px; color: $text-primary; font-weight: 500; }
+    .sim-num { font-size: 22px; color: $text-hint; }
+  }
+
+  .section-header {
+    padding: 20px 32px 16px;
+    .section-title { display: block; font-size: 32px; color: $text-primary; font-weight: bold; }
+    .section-desc { display: block; font-size: 24px; color: $text-hint; margin-top: 4px; }
+  }
+
+  .pkg-list {
+    padding: 0 24px;
+
+    .pkg-card {
+      background: #fff; border-radius: $radius-lg; padding: 28px;
+      margin-bottom: 20px; display: flex; align-items: center;
+      border: 3px solid transparent; position: relative; overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+      transition: border-color 0.2s;
+      &:active { opacity: 0.85; }
+
+      &.selected {
+        border-color: $primary;
+        background: linear-gradient(135deg, rgba($primary, 0.03), rgba($primary, 0.08));
+      }
+
+      .pkg-tag {
+        position: absolute; top: 0; right: 0;
+        background: linear-gradient(135deg, $warning, #FF6D00);
+        padding: 4px 20px; border-radius: 0 0 0 16px;
+        .tag-text { font-size: 20px; color: #fff; font-weight: 500; }
+      }
+
+      .pkg-main {
+        flex: 1;
+        .pkg-name { display: block; font-size: 30px; color: $text-primary; font-weight: 500; margin-bottom: 8px; }
+        .pkg-detail { display: flex; align-items: baseline; gap: 4px; }
+        .pkg-data { font-size: 36px; color: $primary; font-weight: bold; }
+        .pkg-duration { font-size: 24px; color: $text-hint; }
+      }
+
+      .pkg-price {
+        margin-right: 20px; text-align: right;
+        .price-row { display: flex; align-items: baseline; justify-content: flex-end; }
+        .price-symbol { font-size: 24px; color: $danger; font-weight: bold; }
+        .price-num { font-size: 44px; color: $danger; font-weight: bold; }
+        .price-original { font-size: 22px; color: $text-hint; text-decoration: line-through; }
+      }
+
+      .pkg-check {
+        .check-empty {
+          width: 44px; height: 44px; border-radius: 50%;
+          border: 3px solid $border; box-sizing: border-box;
+        }
+      }
+    }
+  }
+
+  .pay-section {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: #fff; padding: 20px 28px;
+    padding-bottom: calc(20px + env(safe-area-inset-bottom));
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+    display: flex; align-items: center; gap: 24px;
+
+    .pay-info {
+      .pay-label { display: block; font-size: 22px; color: $text-hint; }
+      .pay-amount { display: flex; align-items: baseline; }
+      .amount-symbol { font-size: 26px; color: $danger; font-weight: bold; }
+      .amount-num { font-size: 48px; color: $danger; font-weight: bold; }
+    }
+
+    .pay-btn {
+      flex: 1; height: 96px; background: linear-gradient(135deg, $primary, $primary-dark);
+      border-radius: 48px; display: flex; align-items: center; justify-content: center;
+      &:active { opacity: 0.85; transform: scale(0.97); }
+      &.disabled { opacity: 0.5; }
+      .btn-text { color: #fff; font-size: 32px; font-weight: 600; }
+    }
+  }
+
+  .tips-section {
+    padding: 30px 32px;
+    .tips-title { display: block; font-size: 26px; color: $text-secondary; font-weight: 500; margin-bottom: 12px; }
+    .tips-item { display: block; font-size: 24px; color: $text-hint; line-height: 2; }
+  }
+}

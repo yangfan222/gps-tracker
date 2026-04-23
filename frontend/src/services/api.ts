@@ -154,6 +154,15 @@ export const simCardApi = {
 
   activate: (deviceId: string) =>
     request({ url: `/sim-card/${deviceId}/activate`, method: 'PUT' }),
+
+  createRechargeOrder: (deviceId: string, packageId: string) =>
+    request({ url: `/sim-card/${deviceId}/recharge`, method: 'POST', data: { packageId } }),
+
+  confirmRechargeOrder: (orderId: number) =>
+    request({ url: `/sim-card/recharge/${orderId}/confirm`, method: 'PUT' }),
+
+  getRechargeOrders: (deviceId: string) =>
+    request({ url: `/sim-card/${deviceId}/recharge-orders` }),
 }
 
 // Report API
@@ -166,4 +175,23 @@ export const reportApi = {
 
   getMileage: (deviceId: string, startDate: string, endDate: string) =>
     request({ url: `/report/${deviceId}/mileage?startDate=${startDate}&endDate=${endDate}` }),
+}
+
+// Share API
+export const shareApi = {
+  /** 创建分享链接 */
+  createShare: (deviceId: string, hours = 24) =>
+    request({ url: `/share/${deviceId}`, method: 'POST', data: { hours } }),
+
+  /** 停止分享 */
+  stopShare: (deviceId: string) =>
+    request({ url: `/share/${deviceId}/stop`, method: 'PUT' }),
+
+  /** 获取当前分享状态 */
+  getShareStatus: (deviceId: string) =>
+    request({ url: `/share/${deviceId}/status` }),
+
+  /** 访客查看分享位置(无需登录) */
+  viewShare: (token: string) =>
+    request({ url: `/share/view/${token}`, needAuth: false }),
 }

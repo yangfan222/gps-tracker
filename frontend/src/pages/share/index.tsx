@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { View, Text } from '@tarojs/components'
 import Taro, { useRouter } from '@tarojs/taro'
 import { useStore } from '../../store'
+import { shareApi } from '../../services/api'
 import Icon from '../../components/Icon'
 import NavBar from '../../components/NavBar'
 import './index.scss'
@@ -11,21 +12,57 @@ export default function SharePage() {
   const deviceId = router.params.deviceId || ''
   const { currentDevice } = useStore()
   const [sharing, setSharing] = useState(false)
+  const [shareToken, setShareToken] = useState('')
+  const [loading, setLoading] = useState(false)
 
-  const handleShare = () => {
-    setSharing(true)
-    const shareUrl = `${window?.location?.origin || 'https://tracker.example.com'}/share?deviceId=${deviceId}&token=temp_${Date.now()}`
+  useEffect(() => {
+    if (deviceId) checkShareStatus()
+  }, [deviceId])
+
+  const checkShareStatus = async () => {
+    try {
+      const data = await shareApi.getShareStatus(deviceId)
+      if (data && data.active) {
+        setSharing(true)
+        setShareToken(data.shareToken)
+      }
+    } catch {}
+  }
+
+  const handleShare = async () => {
+    setLoading(true)
+    try {
+      const data = await shareApi.createShare(deviceId, 24)
+      setSharing(true)
+      setShareToken(data.shareToken)
+      const shareUrl = `${window?.location?.origin || ''}/share-view?token=${data.shareToken}`
+      Taro.setClipboardData({
+        data: shareUrl,
+        success: () => {
+          Taro.showToast({ title: '链接已复制，有效期24小时', icon: 'none', duration: 3000 })
+        }
+      })
+    } catch {}
+    setLoading(false)
+  }
+
+  const handleCopyLink = () => {
+    const shareUrl = `${window?.location?.origin || ''}/share-view?token=${shareToken}`
     Taro.setClipboardData({
       data: shareUrl,
       success: () => {
-        Taro.showToast({ title: '链接已复制，有效期24小时', icon: 'none', duration: 3000 })
+        Taro.showToast({ title: '链接已复制', icon: 'success' })
       }
     })
   }
 
-  const handleStopShare = () => {
-    setSharing(false)
-    Taro.showToast({ title: '已停止分享', icon: 'success' })
+  const handleStopShare = async () => {
+    try {
+      await shareApi.stopShare(deviceId)
+      setSharing(false)
+      setShareToken('')
+      Taro.showToast({ title: '已停止分享', icon: 'success' })
+    } catch {}
   }
 
   const openInMap = (mapType: string) => {
@@ -37,8 +74,8 @@ export default function SharePage() {
   }
 
   const mapApps = [
-    { name: '高德地图', iconName: 'map-pin', color: '#1890ff' },
-    { name: '百度地图', iconName: 'compass', color: '#3385ff' },
+    { name: '高德地图', iconName: 'map-pin', color: '#00C853' },
+    { name: '百度地图', iconName: 'compass', color: '#2979FF' },
     { name: 'Google地图', iconName: 'globe', color: '#34a853' },
   ]
 
@@ -47,7 +84,7 @@ export default function SharePage() {
       <NavBar title='分享位置' />
       <View className='share-card'>
         <View className='card-icon'>
-          <Icon name='link' size={64} color='#1890ff' />
+          <Icon name='link' size={64} color='#00C853' />
         </View>
         <Text className='card-title'>分享设备位置</Text>
         <Text className='card-desc'>
@@ -55,13 +92,13 @@ export default function SharePage() {
         </Text>
 
         {!sharing ? (
-          <View className='share-btn' onClick={handleShare}>
+          <View className={`share-btn ${loading ? 'disabled' : ''}`} onClick={loading ? undefined : handleShare}>
             <Icon name='share' size={32} color='#fff' />
-            <Text className='btn-text'>开始分享</Text>
+            <Text className='btn-text'>{loading ? '生成中...' : '开始分享'}</Text>
           </View>
         ) : (
           <View className='share-actions'>
-            <View className='copy-btn' onClick={handleShare}>
+            <View className='copy-btn' onClick={handleCopyLink}>
               <Text className='btn-text'>复制链接</Text>
             </View>
             <View className='stop-btn' onClick={handleStopShare}>
