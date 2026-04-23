@@ -39,7 +39,9 @@ export default function Login() {
       Taro.setStorageSync('token', res.access_token)
       Taro.setStorageSync('user', JSON.stringify(res.user))
       Taro.switchTab({ url: '/pages/index/index' })
-    } catch (err) {
+    } catch (err: any) {
+      const msg = err?.message || err?.errMsg || '登录失败，请检查网络'
+      Taro.showToast({ title: msg, icon: 'none', duration: 3000 })
     } finally {
       setLoading(false)
     }
@@ -127,7 +129,7 @@ export default function Login() {
       </View>
 
       <View className='login-footer'>
-        <Text className='footer-text'>GPS Tracker v1.0.0</Text>
+        <Text className='footer-text'>GPS Tracker v1.0.4</Text>
       </View>
     </View>
   )

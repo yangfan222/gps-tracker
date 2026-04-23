@@ -13,6 +13,12 @@ import { SimCardModule } from './sim-card/sim-card.module';
 import { ReportModule } from './report/report.module';
 import { TcpServerModule } from './tcp-server/tcp-server.module';
 import { WebsocketModule } from './websocket/websocket.module';
+import { SeedController } from './seed/seed.controller';
+import { Device } from './entities/device.entity';
+import { Location } from './entities/location.entity';
+import { Geofence } from './entities/geofence.entity';
+import { Alarm } from './entities/alarm.entity';
+import { SimCard } from './entities/sim-card.entity';
 
 @Module({
   imports: [
@@ -27,6 +33,7 @@ import { WebsocketModule } from './websocket/websocket.module';
       entities: [__dirname + '/entities/*.entity{.ts,.js}'],
       synchronize: true,
     }),
+    TypeOrmModule.forFeature([Device, Location, Geofence, Alarm, SimCard]),
     AuthModule,
     DeviceModule,
     LocationModule,
@@ -39,5 +46,6 @@ import { WebsocketModule } from './websocket/websocket.module';
     TcpServerModule,
     WebsocketModule,
   ],
+  controllers: [SeedController],
 })
 export class AppModule {}

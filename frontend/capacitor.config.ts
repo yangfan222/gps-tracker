@@ -5,11 +5,16 @@ const config: CapacitorConfig = {
   appName: 'GPS定位器',
   webDir: 'dist',
   server: {
-    androidScheme: 'https',
+    androidScheme: 'http',
     allowNavigation: ['*'],
   },
   android: {
     allowMixedContent: true,
+  },
+  plugins: {
+    CapacitorHttp: {
+      enabled: true,
+    },
   },
 };
 

@@ -1,6 +1,6 @@
 import Taro from '@tarojs/taro'
 
-const BASE_URL = process.env.TARO_APP_API_URL || '/api'
+const BASE_URL = process.env.TARO_APP_API_URL || 'http://1.94.48.15:3000/api'
 
 interface RequestOptions {
   url: string
@@ -11,39 +11,45 @@ interface RequestOptions {
 
 export async function request<T = any>(options: RequestOptions): Promise<T> {
   const { url, method = 'GET', data, needAuth = true } = options
-  const header: Record<string, string> = {
+  const headers: Record<string, string> = {
     'Content-Type': 'application/json',
   }
 
   if (needAuth) {
     const token = Taro.getStorageSync('token')
     if (token) {
-      header['Authorization'] = `Bearer ${token}`
+      headers['Authorization'] = `Bearer ${token}`
     }
   }
 
-  try {
-    const res = await Taro.request({
-      url: `${BASE_URL}${url}`,
-      method,
-      data,
-      header,
-    })
+  const fullUrl = `${BASE_URL}${url}`
 
-    if (res.statusCode === 401) {
+  try {
+    const fetchOptions: RequestInit = {
+      method,
+      headers,
+    }
+    if (data && method !== 'GET') {
+      fetchOptions.body = JSON.stringify(data)
+    }
+
+    const res = await fetch(fullUrl, fetchOptions)
+    const resData = await res.json().catch(() => ({}))
+
+    if (res.status === 401 && needAuth) {
       Taro.removeStorageSync('token')
       Taro.redirectTo({ url: '/pages/login/index' }).catch(() => {})
-      throw new Error('未授权，请重新登录')
+      throw new Error('登录已过期，请重新登录')
     }
 
-    if (res.statusCode >= 400) {
-      throw new Error(res.data?.message || '请求失败')
+    if (res.status >= 400) {
+      throw new Error(resData?.message || '请求失败')
     }
 
-    return res.data as T
+    return resData as T
   } catch (err: any) {
-    const message = err?.message || err?.errMsg || '网络错误'
-    Taro.showToast({ title: message, icon: 'none' })
+    const message = err?.message || '网络错误'
+    Taro.showToast({ title: message, icon: 'none', duration: 3000 })
     throw err instanceof Error ? err : new Error(message)
   }
 }
