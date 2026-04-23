@@ -10,7 +10,7 @@ import { GeofenceService } from '../geofence/geofence.service';
 export class TcpServerService implements OnModuleInit {
   private readonly logger = new Logger(TcpServerService.name);
   private server: net.Server;
-  private readonly TCP_PORT = 7700;
+  private readonly TCP_PORT = parseInt(process.env.TCP_PORT || '7700', 10);
 
   constructor(
     private deviceService: DeviceService,
