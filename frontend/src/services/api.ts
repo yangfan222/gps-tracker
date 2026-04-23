@@ -12,7 +12,7 @@ interface RequestOptions {
 export async function request<T = any>(options: RequestOptions): Promise<T> {
   const { url, method = 'GET', data, needAuth = true } = options
   const headers: Record<string, string> = {
-    'Content-Type': 'application/json',
+    'Content-Type': 'application/json; charset=utf-8',
   }
 
   if (needAuth) {

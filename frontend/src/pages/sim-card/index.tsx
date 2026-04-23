@@ -40,6 +40,7 @@ export default function SimCardPage() {
 
   return (
     <View className='sim-page'>
+      <NavBar title='流量卡' />
       {!simCard ? (
         <View className='no-sim'>
           <Icon name='sim-card' size={96} color='#ccc' />

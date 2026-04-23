@@ -20,6 +20,15 @@ export default function IndexPage() {
       Taro.redirectTo({ url: '/pages/login/index' }).catch(() => {})
       return
     }
+    // Check if token is older than 7 days
+    const loginTime = parseInt(Taro.getStorageSync('login_time') || '0', 10)
+    if (loginTime && Date.now() - loginTime > 7 * 24 * 60 * 60 * 1000) {
+      Taro.removeStorageSync('token')
+      Taro.removeStorageSync('user')
+      Taro.removeStorageSync('login_time')
+      Taro.redirectTo({ url: '/pages/login/index' }).catch(() => {})
+      return
+    }
     loadDevices()
     return () => {
       if (timerRef.current) clearInterval(timerRef.current)

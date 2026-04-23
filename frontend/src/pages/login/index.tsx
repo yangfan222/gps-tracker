@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { View, Text, Input } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import { authApi } from '../../services/api'
@@ -11,8 +11,34 @@ export default function Login() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [phone, setPhone] = useState('')
+  const [rememberMe, setRememberMe] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [autoLogging, setAutoLogging] = useState(true)
   const { setUser, setToken } = useStore()
+
+  useEffect(() => {
+    // Check if already logged in (token exists)
+    const token = Taro.getStorageSync('token')
+    const userStr = Taro.getStorageSync('user')
+    if (token && userStr) {
+      // Token exists, auto-redirect to home
+      setToken(token)
+      try { setUser(JSON.parse(userStr)) } catch {}
+      Taro.switchTab({ url: '/pages/index/index' })
+      return
+    }
+
+    // Restore saved credentials
+    const savedRemember = Taro.getStorageSync('remember_me')
+    if (savedRemember) {
+      setRememberMe(true)
+      const savedUser = Taro.getStorageSync('saved_username')
+      const savedPass = Taro.getStorageSync('saved_password')
+      if (savedUser) setUsername(savedUser)
+      if (savedPass) setPassword(savedPass)
+    }
+    setAutoLogging(false)
+  }, [])
 
   const handleSubmit = async () => {
     if (!username || !password) {
@@ -38,6 +64,19 @@ export default function Login() {
       setUser(res.user)
       Taro.setStorageSync('token', res.access_token)
       Taro.setStorageSync('user', JSON.stringify(res.user))
+      Taro.setStorageSync('login_time', Date.now().toString())
+
+      // Save or clear credentials based on remember me
+      if (rememberMe) {
+        Taro.setStorageSync('remember_me', 'true')
+        Taro.setStorageSync('saved_username', username)
+        Taro.setStorageSync('saved_password', password)
+      } else {
+        Taro.removeStorageSync('remember_me')
+        Taro.removeStorageSync('saved_username')
+        Taro.removeStorageSync('saved_password')
+      }
+
       Taro.switchTab({ url: '/pages/index/index' })
     } catch (err: any) {
       const msg = err?.message || err?.errMsg || '登录失败，请检查网络'
@@ -45,6 +84,11 @@ export default function Login() {
     } finally {
       setLoading(false)
     }
+  }
+
+  // Show nothing while checking auto-login
+  if (autoLogging) {
+    return <View className='login-page' />
   }
 
   return (
@@ -114,6 +158,15 @@ export default function Login() {
           )}
         </View>
 
+        {isLogin && (
+          <View className='remember-row' onClick={() => setRememberMe(!rememberMe)}>
+            <View className={`remember-check ${rememberMe ? 'checked' : ''}`}>
+              {rememberMe && <Icon name='check' size={20} color='#fff' />}
+            </View>
+            <Text className='remember-text'>记住密码</Text>
+          </View>
+        )}
+
         <View
           className={`submit-btn ${loading ? 'disabled' : ''}`}
           onClick={!loading ? handleSubmit : undefined}
@@ -129,7 +182,7 @@ export default function Login() {
       </View>
 
       <View className='login-footer'>
-        <Text className='footer-text'>GPS Tracker v1.0.4</Text>
+        <Text className='footer-text'>GPS Tracker v1.0.8</Text>
       </View>
     </View>
   )
