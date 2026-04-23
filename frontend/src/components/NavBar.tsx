@@ -22,10 +22,11 @@ export default function NavBar({ title, back = true, rightContent }: NavBarProps
     <View className='navbar'>
       {back ? (
         <View className='navbar-back' onClick={handleBack}>
-          <Icon name='chevron-left' size={48} color='#333' />
+          <Icon name='chevron-left' size={44} color='#333' />
+          <Text className='navbar-back-text'>返回</Text>
         </View>
       ) : (
-        <View className='navbar-right' />
+        <View className='navbar-placeholder' />
       )}
       <Text className='navbar-title'>{title}</Text>
       <View className='navbar-right'>

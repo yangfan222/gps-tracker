@@ -98,19 +98,8 @@ export default function MapView({ latitude, longitude, deviceName, zoom = 15, tr
     if (markerRef.current) {
       markerRef.current.setLatLng(pos)
     } else {
-      const deviceIcon = L.divIcon({
-        className: 'device-marker-icon',
-        html: `<div style="
-          width: 22px; height: 22px;
-          background: #00C853;
-          border: 3px solid #fff;
-          border-radius: 50%;
-          box-shadow: 0 2px 10px rgba(0,200,83,0.5);
-        "></div>`,
-        iconSize: [22, 22],
-        iconAnchor: [11, 11],
-      })
-      markerRef.current = L.marker(pos, { icon: deviceIcon }).addTo(map)
+      // Use Leaflet default marker icon (standard blue pin)
+      markerRef.current = L.marker(pos).addTo(map)
     }
 
     markerRef.current.bindPopup(

@@ -227,25 +227,25 @@ export default function IndexPage() {
           <View className='panel-actions'>
             <View className='action-btn' onClick={() => Taro.navigateTo({ url: `/pages/track/index?deviceId=${currentDevice.deviceId}` })}>
               <View className='action-icon track'>
-                <Icon name='route' size={40} color='#fff' />
+                <Icon name='route' size={36} color='#fff' />
               </View>
               <Text className='action-text'>轨迹</Text>
             </View>
             <View className='action-btn' onClick={() => Taro.navigateTo({ url: `/pages/settings/index?deviceId=${currentDevice.deviceId}` })}>
               <View className='action-icon settings'>
-                <Icon name='settings' size={40} color='#fff' />
+                <Icon name='settings' size={36} color='#fff' />
               </View>
               <Text className='action-text'>设置</Text>
             </View>
             <View className='action-btn' onClick={() => Taro.navigateTo({ url: `/pages/detail/index?deviceId=${currentDevice.deviceId}` })}>
               <View className='action-icon detail'>
-                <Icon name='info' size={40} color='#fff' />
+                <Icon name='info' size={36} color='#fff' />
               </View>
               <Text className='action-text'>详情</Text>
             </View>
             <View className='action-btn' onClick={handleNavigate}>
               <View className='action-icon navigate'>
-                <Icon name='navigation' size={40} color='#fff' />
+                <Icon name='navigation' size={36} color='#fff' />
               </View>
               <Text className='action-text'>导航</Text>
             </View>

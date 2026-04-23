@@ -116,17 +116,30 @@ page {
   box-sizing: border-box;
 
   .navbar-back {
-    width: 44px;
+    min-width: 70px;
     height: 44px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    border-radius: 50%;
+    justify-content: flex-start;
+    border-radius: 22px;
     flex-shrink: 0;
+    padding: 0 8px;
+    cursor: pointer;
 
     &:active {
       background: #f0f0f0;
     }
+
+    .navbar-back-text {
+      font-size: 15px;
+      color: $text-primary;
+      margin-left: 2px;
+    }
+  }
+
+  .navbar-placeholder {
+    min-width: 70px;
+    flex-shrink: 0;
   }
 
   .navbar-title {
