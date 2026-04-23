@@ -1,0 +1,150 @@
+// ========== Height Chain Reset (critical for Leaflet) ==========
+html, body, #app {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+// ========== Design Tokens ==========
+$primary: #1890ff;
+$primary-dark: #096dd9;
+$success: #52c41a;
+$warning: #faad14;
+$danger: #ff4d4f;
+$text-primary: #333;
+$text-secondary: #666;
+$text-tertiary: #999;
+$bg-page: #f5f5f5;
+$bg-card: #fff;
+$border-color: #f0f0f0;
+
+// Global styles
+page {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 28px;
+  color: $text-primary;
+  background-color: $bg-page;
+  height: 100%;
+}
+
+// Common utility classes
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.text-primary { color: $primary; }
+.text-success { color: $success; }
+.text-warning { color: $warning; }
+.text-danger { color: $danger; }
+.text-gray { color: $text-tertiary; }
+.text-sm { font-size: 24px; }
+.text-lg { font-size: 32px; }
+.text-xl { font-size: 36px; }
+
+.mt-10 { margin-top: 10px; }
+.mt-20 { margin-top: 20px; }
+.mb-10 { margin-bottom: 10px; }
+.mb-20 { margin-bottom: 20px; }
+.p-20 { padding: 20px; }
+.p-30 { padding: 30px; }
+
+.card {
+  background: $bg-card;
+  border-radius: 16px;
+  padding: 24px;
+  margin: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 88px;
+  border-radius: 44px;
+  font-size: 30px;
+  font-weight: 500;
+
+  &-primary {
+    background: linear-gradient(135deg, $primary, $primary-dark);
+    color: #fff;
+  }
+
+  &-success {
+    background: linear-gradient(135deg, $success, #389e0d);
+    color: #fff;
+  }
+
+  &-outline {
+    border: 2px solid $primary;
+    color: $primary;
+    background: #fff;
+  }
+}
+
+.divider {
+  height: 1px;
+  background: $border-color;
+  margin: 20px 0;
+}
+
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+// ========== NavBar 全局样式 ==========
+.navbar {
+  display: flex;
+  align-items: center;
+  height: 44px;
+  padding: 0 12px;
+  background: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid #f0f0f0;
+  box-sizing: border-box;
+
+  .navbar-back {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    flex-shrink: 0;
+
+    &:active {
+      background: #f5f5f5;
+    }
+  }
+
+  .navbar-title {
+    flex: 1;
+    text-align: center;
+    font-size: 17px;
+    font-weight: 600;
+    color: #333;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .navbar-right {
+    width: 36px;
+    flex-shrink: 0;
+  }
+}

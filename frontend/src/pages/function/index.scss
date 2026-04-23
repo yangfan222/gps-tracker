@@ -1,0 +1,112 @@
+.function-page {
+  min-height: 100vh;
+  background: #f5f5f5;
+
+  .function-header {
+    background: linear-gradient(135deg, #1890ff, #096dd9);
+    padding: 24px 30px 40px;
+
+    .header-title {
+      display: block;
+      font-size: 34px;
+      font-weight: bold;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+
+    .header-device {
+      font-size: 22px;
+      color: rgba(255, 255, 255, 0.8);
+    }
+  }
+
+  .feature-grid {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 16px;
+    margin-top: -24px;
+    background: #fff;
+    border-radius: 20px 20px 0 0;
+    margin-left: 16px;
+    margin-right: 16px;
+    padding-top: 20px;
+    padding-bottom: 8px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+
+    .feature-item {
+      width: 33.33%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 14px 0;
+
+      .feature-icon {
+        width: 80px;
+        height: 80px;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 8px;
+      }
+
+      .feature-label {
+        font-size: 24px;
+        color: #333;
+      }
+    }
+  }
+
+  .device-card {
+    margin: 16px;
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+
+      .card-title {
+        font-size: 28px;
+        font-weight: 500;
+        color: #333;
+      }
+
+      .status-dot {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: #999;
+
+        &.online { background: #52c41a; }
+      }
+    }
+
+    .card-info {
+      display: flex;
+      flex-wrap: wrap;
+
+      .info-item {
+        width: 50%;
+        padding: 6px 0;
+
+        .info-label {
+          display: block;
+          font-size: 22px;
+          color: #999;
+          margin-bottom: 4px;
+        }
+
+        .info-value {
+          font-size: 26px;
+          color: #333;
+        }
+      }
+    }
+  }
+}
+

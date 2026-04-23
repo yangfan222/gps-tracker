@@ -1,0 +1,86 @@
+.report-page {
+  min-height: 100vh;
+  background: #f5f5f5;
+
+  .tab-bar {
+    display: flex;
+    background: #fff;
+    padding: 0 20px;
+    border-bottom: 1px solid #f0f0f0;
+
+    .tab {
+      flex: 1;
+      text-align: center;
+      padding: 24px 0;
+      border-bottom: 4px solid transparent;
+
+      &.active {
+        border-bottom-color: #1890ff;
+        .tab-text { color: #1890ff; font-weight: bold; }
+      }
+
+      .tab-text { font-size: 28px; color: #666; }
+    }
+  }
+
+  .date-bar {
+    display: flex;
+    align-items: center;
+    padding: 16px 20px;
+    background: #fff;
+    margin-bottom: 12px;
+
+    .date-picker {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      background: #f5f5f5;
+      padding: 14px 20px;
+      border-radius: 12px;
+      margin-right: 16px;
+      .date-text { font-size: 26px; color: #333; flex: 1; }
+      .date-icon { font-size: 20px; color: #999; }
+    }
+
+    .query-btn {
+      background: #1890ff;
+      padding: 14px 30px;
+      border-radius: 12px;
+      .query-text { color: #fff; font-size: 26px; }
+    }
+  }
+
+  .report-content {
+    padding: 0 20px;
+
+    .empty { text-align: center; padding: 80px 0; .empty-text { font-size: 28px; color: #999; } }
+
+    .data-item {
+      display: flex; justify-content: space-between; background: #fff;
+      padding: 16px 20px; border-radius: 8px; margin-bottom: 8px;
+      .item-time { font-size: 24px; color: #999; }
+      .item-value { font-size: 26px; color: #333; }
+    }
+
+    .parking-item {
+      background: #fff; padding: 20px; border-radius: 12px; margin-bottom: 12px;
+      .parking-time {
+        display: flex; justify-content: space-between; margin-bottom: 8px;
+        .time-text { font-size: 26px; color: #333; }
+        .duration-text { font-size: 26px; color: #1890ff; font-weight: 500; }
+      }
+      .parking-addr { font-size: 22px; color: #999; }
+    }
+
+    .mileage-item {
+      display: flex; align-items: center; background: #fff;
+      padding: 16px 20px; border-radius: 8px; margin-bottom: 8px;
+      .mileage-date { font-size: 24px; color: #666; width: 160px; }
+      .mileage-bar {
+        flex: 1; height: 16px; background: #f0f0f0; border-radius: 8px; margin: 0 16px; overflow: hidden;
+        .bar-fill { height: 100%; background: linear-gradient(90deg, #1890ff, #36cfc9); border-radius: 8px; }
+      }
+      .mileage-value { font-size: 24px; color: #333; width: 120px; text-align: right; }
+    }
+  }
+}

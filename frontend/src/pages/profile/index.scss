@@ -1,0 +1,120 @@
+.profile-page {
+  min-height: 100vh;
+  background: #f5f5f5;
+
+  .user-card {
+    background: linear-gradient(135deg, #1890ff, #096dd9);
+    padding: 60px 30px 40px;
+    display: flex;
+    align-items: center;
+
+    .avatar {
+      width: 100px;
+      height: 100px;
+      background: rgba(255, 255, 255, 0.25);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 24px;
+
+      .avatar-text {
+        font-size: 40px;
+        color: #fff;
+        font-weight: bold;
+      }
+    }
+
+    .user-info {
+      .username {
+        display: block;
+        font-size: 34px;
+        color: #fff;
+        font-weight: bold;
+        margin-bottom: 8px;
+      }
+
+      .user-type {
+        font-size: 24px;
+        color: rgba(255, 255, 255, 0.8);
+        background: rgba(255, 255, 255, 0.15);
+        padding: 4px 16px;
+        border-radius: 20px;
+      }
+    }
+  }
+
+  .menu-section {
+    margin: 20px;
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+
+    .section-title {
+      display: block;
+      font-size: 24px;
+      color: #999;
+      padding: 20px 24px 10px;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      padding: 24px;
+      border-bottom: 1px solid #f5f5f5;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      .item-icon {
+        font-size: 32px;
+        margin-right: 16px;
+        width: 40px;
+        text-align: center;
+      }
+
+      .item-label {
+        flex: 1;
+        font-size: 28px;
+        color: #333;
+      }
+
+      .item-right {
+        display: flex;
+        align-items: center;
+
+        .item-value {
+          font-size: 26px;
+          color: #999;
+          margin-right: 8px;
+        }
+
+        .item-arrow {
+          font-size: 32px;
+          color: #ccc;
+        }
+      }
+    }
+  }
+
+  .logout-section {
+    padding: 40px 20px;
+
+    .logout-btn {
+      height: 88px;
+      background: #fff;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+
+      .logout-text {
+        color: #ff4d4f;
+        font-size: 30px;
+      }
+    }
+  }
+}

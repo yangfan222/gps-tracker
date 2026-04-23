@@ -1,0 +1,55 @@
+{
+  "name": "gps-tracker-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "GPS Tracker Frontend - Taro + React",
+  "templateInfo": {
+    "name": "default",
+    "typescript": true,
+    "css": "sass"
+  },
+  "scripts": {
+    "build:weapp": "taro build --type weapp",
+    "build:h5": "taro build --type h5",
+    "dev:weapp": "npm run build:weapp -- --watch",
+    "dev:h5": "npm run build:h5 -- --watch"
+  },
+  "browserslist": [
+    "last 3 versions",
+    "Android >= 4.1",
+    "ios >= 8"
+  ],
+  "dependencies": {
+    "@capacitor/android": "^8.3.1",
+    "@capacitor/cli": "^8.3.1",
+    "@capacitor/core": "^8.3.1",
+    "@tarojs/components": "3.6.31",
+    "@tarojs/helper": "3.6.31",
+    "@tarojs/plugin-framework-react": "3.6.31",
+    "@tarojs/plugin-platform-h5": "3.6.31",
+    "@tarojs/plugin-platform-weapp": "3.6.31",
+    "@tarojs/react": "3.6.31",
+    "@tarojs/runtime": "3.6.31",
+    "@tarojs/shared": "3.6.31",
+    "@tarojs/taro": "3.6.31",
+    "leaflet": "^1.9.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "socket.io-client": "^4.7.5",
+    "zustand": "^4.5.2"
+  },
+  "devDependencies": {
+    "@babel/runtime": "^7.24.0",
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.6.2",
+    "@tarojs/cli": "3.6.31",
+    "@tarojs/webpack5-runner": "3.6.31",
+    "@types/leaflet": "^1.9.12",
+    "@types/react": "^18.2.0",
+    "babel-preset-taro": "3.6.31",
+    "postcss": "^8.4.35",
+    "react-refresh": "^0.18.0",
+    "sass": "^1.71.1",
+    "typescript": "^5.4.0",
+    "webpack": "5.88.2"
+  }
+}

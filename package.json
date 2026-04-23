@@ -1,0 +1,16 @@
+{
+  "name": "gps-tracker",
+  "version": "1.0.0",
+  "private": true,
+  "description": "GPS定位器 - 完整前后端项目",
+  "scripts": {
+    "install:all": "cd backend && npm install && cd ../frontend && npm install",
+    "backend": "cd backend && npm run start:dev",
+    "backend:build": "cd backend && npm run build",
+    "backend:start": "cd backend && npm run start:prod",
+    "frontend:h5": "cd frontend && npm run dev:h5",
+    "frontend:build": "cd frontend && npm run build:h5",
+    "frontend:weapp": "cd frontend && npm run dev:weapp",
+    "dev": "echo 'Please run backend and frontend in separate terminals: npm run backend && npm run frontend:h5'"
+  }
+}

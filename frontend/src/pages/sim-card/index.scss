@@ -1,0 +1,99 @@
+.sim-page {
+  min-height: 100vh;
+  background: #f5f5f5;
+
+  .loading { display: block; text-align: center; padding: 40px; color: #999; font-size: 28px; }
+
+  .no-sim {
+    display: flex; flex-direction: column; align-items: center; padding: 120px 40px;
+    .no-sim-icon { font-size: 80px; margin-bottom: 20px; }
+    .no-sim-text { font-size: 32px; color: #333; margin-bottom: 10px; }
+    .no-sim-hint { font-size: 26px; color: #999; }
+  }
+
+  .sim-card-visual {
+    margin: 20px;
+    background: linear-gradient(135deg, #1890ff, #096dd9);
+    border-radius: 20px;
+    padding: 30px;
+    position: relative;
+    min-height: 200px;
+
+    .sim-chip {
+      width: 60px; height: 44px; background: #ffd700;
+      border-radius: 8px; margin-bottom: 24px;
+      border: 2px solid #e6c200;
+    }
+
+    .sim-number {
+      display: block; font-size: 36px; color: #fff;
+      font-weight: bold; letter-spacing: 4px; margin-bottom: 8px;
+    }
+
+    .sim-iccid { display: block; font-size: 22px; color: rgba(255,255,255,0.7); }
+
+    .sim-status {
+      position: absolute; top: 30px; right: 30px;
+      padding: 6px 20px; border-radius: 20px;
+      &.active { background: rgba(82,196,26,0.3); .status-text { color: #95de64; } }
+      &.inactive { background: rgba(255,255,255,0.2); .status-text { color: rgba(255,255,255,0.8); } }
+      &.expired { background: rgba(255,77,79,0.3); .status-text { color: #ff7875; } }
+      .status-text { font-size: 24px; }
+    }
+  }
+
+  .info-card {
+    margin: 16px 20px;
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+
+    .card-title {
+      display: block; font-size: 28px; color: #333;
+      font-weight: 500; margin-bottom: 16px;
+    }
+
+    .info-row {
+      display: flex; justify-content: space-between;
+      padding: 12px 0; border-bottom: 1px solid #f5f5f5;
+      &:last-child { border-bottom: none; }
+      .info-label { font-size: 26px; color: #666; }
+      .info-value { font-size: 26px; color: #333; }
+    }
+
+    .usage-circle {
+      display: flex; justify-content: center; margin: 20px 0;
+      .circle-inner {
+        width: 160px; height: 160px; border-radius: 50%;
+        border: 8px solid #1890ff; display: flex;
+        flex-direction: column; align-items: center; justify-content: center;
+        .usage-percent { font-size: 40px; color: #1890ff; font-weight: bold; }
+        .usage-label { font-size: 22px; color: #999; }
+      }
+    }
+
+    .usage-details {
+      display: flex; justify-content: space-around; padding-top: 16px;
+      border-top: 1px solid #f5f5f5;
+      .usage-item {
+        text-align: center;
+        .usage-num { display: block; font-size: 28px; color: #333; font-weight: 500; }
+        .usage-desc { font-size: 22px; color: #999; }
+      }
+    }
+  }
+
+  .action-section {
+    padding: 10px 20px;
+
+    .activate-btn, .recharge-btn {
+      height: 80px; border-radius: 40px;
+      display: flex; align-items: center; justify-content: center;
+      .btn-text { font-size: 30px; color: #fff; }
+    }
+
+    .activate-btn { background: linear-gradient(135deg, #52c41a, #389e0d); }
+    .recharge-btn { background: linear-gradient(135deg, #1890ff, #096dd9); }
+  }
+}

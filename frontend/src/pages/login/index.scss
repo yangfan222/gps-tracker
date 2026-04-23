@@ -1,0 +1,134 @@
+.login-page {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #1890ff 0%, #096dd9 40%, #f5f5f5 40%);
+  display: flex;
+  flex-direction: column;
+
+  .login-header {
+    padding: 120px 40px 60px;
+    text-align: center;
+
+    .logo-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .logo-icon {
+        width: 120px;
+        height: 120px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+
+        .logo-text {
+          color: #fff;
+          font-size: 40px;
+          font-weight: bold;
+        }
+      }
+
+      .app-title {
+        color: #fff;
+        font-size: 44px;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+
+      .app-subtitle {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 26px;
+      }
+    }
+  }
+
+  .login-form {
+    margin: 0 40px;
+    background: #fff;
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+
+    .form-tabs {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 40px;
+
+      .tab {
+        font-size: 32px;
+        color: #999;
+        padding: 10px 40px;
+        border-bottom: 4px solid transparent;
+
+        &.active {
+          color: #1890ff;
+          font-weight: bold;
+          border-bottom-color: #1890ff;
+        }
+      }
+    }
+
+    .input-group {
+      .input-item {
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid #f0f0f0;
+        padding: 20px 0;
+        margin-bottom: 10px;
+
+        .input-icon {
+          font-size: 36px;
+          margin-right: 20px;
+          width: 44px;
+          text-align: center;
+        }
+
+        .input-field {
+          flex: 1;
+          font-size: 28px;
+          color: #333;
+        }
+      }
+    }
+
+    .submit-btn {
+      margin-top: 40px;
+      height: 88px;
+      background: linear-gradient(135deg, #1890ff, #096dd9);
+      border-radius: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 32px;
+      font-weight: 500;
+
+      &.disabled {
+        opacity: 0.6;
+      }
+    }
+
+    .login-options {
+      text-align: center;
+      margin-top: 30px;
+
+      .option-text {
+        color: #1890ff;
+        font-size: 26px;
+      }
+    }
+  }
+
+  .login-footer {
+    margin-top: auto;
+    padding: 40px;
+    text-align: center;
+
+    .footer-text {
+      color: #999;
+      font-size: 24px;
+    }
+  }
+}

@@ -1,0 +1,323 @@
+.index-page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  .map-container {
+    flex: 1;
+    position: relative;
+    background: #e8edf3;
+
+    .map-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .map-inner {
+        text-align: center;
+
+        .map-content {
+          .coord-text {
+            font-size: 24px;
+            color: #666;
+            display: block;
+            margin-bottom: 40px;
+          }
+
+          .device-marker {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            .marker-dot {
+              width: 32px;
+              height: 32px;
+              background: #1890ff;
+              border-radius: 50%;
+              border: 4px solid rgba(24, 144, 255, 0.3);
+              box-shadow: 0 0 20px rgba(24, 144, 255, 0.4);
+            }
+
+            .marker-label {
+              margin-top: 10px;
+              font-size: 24px;
+              color: #333;
+              background: #fff;
+              padding: 4px 16px;
+              border-radius: 8px;
+              box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            }
+          }
+        }
+
+        .no-device {
+          .no-device-text {
+            display: block;
+            font-size: 32px;
+            color: #999;
+            margin-bottom: 10px;
+          }
+          .no-device-hint {
+            font-size: 26px;
+            color: #bbb;
+          }
+        }
+      }
+    }
+
+    .map-controls {
+      position: absolute;
+      right: 20px;
+      top: 200px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+
+      .control-btn {
+        width: 88px;
+        height: 88px;
+        background: #fff;
+        border-radius: 16px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+
+        .control-icon {
+          font-size: 32px;
+        }
+
+        .control-text {
+          font-size: 20px;
+          color: #666;
+          margin-top: 4px;
+        }
+      }
+    }
+
+    .device-switch {
+      position: absolute;
+      top: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      padding: 12px 30px;
+      border-radius: 30px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+
+      .switch-text {
+        font-size: 26px;
+        color: #333;
+        margin-right: 10px;
+      }
+
+      .switch-arrow {
+        font-size: 20px;
+        color: #999;
+      }
+    }
+
+    .device-list-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.3);
+      z-index: 100;
+
+      .device-list {
+        position: absolute;
+        top: 160px;
+        left: 40px;
+        right: 40px;
+        background: #fff;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+
+        .device-item {
+          display: flex;
+          align-items: center;
+          padding: 24px 30px;
+          border-bottom: 1px solid #f0f0f0;
+
+          &.active {
+            background: #e6f7ff;
+          }
+
+          .device-name {
+            flex: 1;
+            font-size: 28px;
+            color: #333;
+          }
+
+          .device-id {
+            font-size: 24px;
+            color: #999;
+            margin-right: 16px;
+          }
+
+          .device-status {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #999;
+
+            &.online {
+              background: #52c41a;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .device-panel {
+    background: #fff;
+    border-radius: 24px 24px 0 0;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.06);
+    padding: 24px;
+    padding-bottom: calc(24px + env(safe-area-inset-bottom));
+
+    .panel-handle {
+      width: 40px;
+      height: 6px;
+      background: #e0e0e0;
+      border-radius: 3px;
+      margin: 0 auto 16px;
+    }
+
+    .panel-status {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+
+      .status-left {
+        display: flex;
+        align-items: center;
+
+        .time-text {
+          font-size: 24px;
+          color: #666;
+          margin-right: 16px;
+        }
+
+        .status-badge {
+          padding: 4px 16px;
+          border-radius: 20px;
+
+          .status-text {
+            font-size: 22px;
+            color: #fff;
+          }
+        }
+      }
+
+      .status-right {
+        display: flex;
+        gap: 20px;
+
+        .signal-text, .battery-text {
+          font-size: 24px;
+          color: #666;
+        }
+      }
+    }
+
+    .panel-info {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+
+      .info-row {
+        width: calc(50% - 5px);
+        display: flex;
+        align-items: center;
+
+        &.full {
+          width: 100%;
+        }
+
+        .info-label {
+          font-size: 24px;
+          color: #999;
+          margin-right: 12px;
+          white-space: nowrap;
+        }
+
+        .info-value {
+          font-size: 24px;
+          color: #333;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+      }
+    }
+
+    .panel-actions {
+      display: flex;
+      justify-content: space-around;
+      padding-top: 20px;
+      border-top: 1px solid #f0f0f0;
+
+      .action-btn {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 10px 20px;
+
+        .action-icon {
+          width: 56px;
+          height: 56px;
+          border-radius: 14px;
+          margin-bottom: 8px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          &.track { background: linear-gradient(135deg, #36cfc9, #13c2c2); }
+          &.settings { background: linear-gradient(135deg, #ffc069, #fa8c16); }
+          &.detail { background: linear-gradient(135deg, #85a5ff, #597ef7); }
+          &.share { background: linear-gradient(135deg, #95de64, #52c41a); }
+        }
+
+        .action-text {
+          font-size: 24px;
+          color: #666;
+        }
+      }
+    }
+  }
+
+  .empty-actions {
+    position: absolute;
+    bottom: 120px;
+    left: 40px;
+    right: 40px;
+
+    .add-device-btn {
+      height: 88px;
+      background: linear-gradient(135deg, #1890ff, #096dd9);
+      border-radius: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .add-text {
+        color: #fff;
+        font-size: 30px;
+        font-weight: 500;
+      }
+    }
+  }
+}

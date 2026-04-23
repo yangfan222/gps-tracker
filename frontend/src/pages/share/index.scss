@@ -1,0 +1,77 @@
+.share-page {
+  min-height: 100vh;
+  background: #f5f5f5;
+  padding: 20px;
+
+  .share-card {
+    background: #fff; border-radius: 20px; padding: 40px;
+    text-align: center; margin-bottom: 20px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+
+    .card-icon {
+      width: 100px; height: 100px; margin: 0 auto 20px;
+      background: #e6f7ff; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      .icon-text { font-size: 48px; }
+    }
+
+    .card-title { display: block; font-size: 34px; color: #333; font-weight: bold; margin-bottom: 12px; }
+    .card-desc { display: block; font-size: 26px; color: #999; line-height: 1.6; margin-bottom: 30px; }
+
+    .share-btn {
+      height: 80px; background: linear-gradient(135deg, #1890ff, #096dd9);
+      border-radius: 40px; display: flex; align-items: center; justify-content: center;
+      .btn-text { color: #fff; font-size: 30px; }
+    }
+
+    .share-actions {
+      display: flex; gap: 20px;
+
+      .copy-btn, .stop-btn {
+        flex: 1; height: 80px; border-radius: 40px;
+        display: flex; align-items: center; justify-content: center;
+        .btn-text { font-size: 28px; }
+      }
+
+      .copy-btn { background: #1890ff; .btn-text { color: #fff; } }
+      .stop-btn { background: #f5f5f5; .btn-text { color: #666; } }
+    }
+  }
+
+  .nav-card {
+    background: #fff; border-radius: 20px; padding: 30px;
+    margin-bottom: 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+
+    .nav-title { display: block; font-size: 30px; color: #333; font-weight: 500; margin-bottom: 8px; }
+    .nav-desc { display: block; font-size: 24px; color: #999; margin-bottom: 24px; }
+
+    .map-options {
+      display: flex; justify-content: space-around;
+
+      .map-option {
+        display: flex; flex-direction: column; align-items: center;
+
+        .map-icon {
+          width: 80px; height: 80px; background: #f0f5ff;
+          border-radius: 20px; display: flex;
+          align-items: center; justify-content: center; margin-bottom: 10px;
+          .map-icon-text { font-size: 36px; }
+        }
+
+        .map-name { font-size: 24px; color: #666; }
+      }
+    }
+  }
+
+  .location-card {
+    background: #fff; border-radius: 20px; padding: 24px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+
+    .loc-title { display: block; font-size: 28px; color: #333; font-weight: 500; margin-bottom: 16px; }
+
+    .loc-info {
+      .loc-coord { display: block; font-size: 24px; color: #666; margin-bottom: 6px; }
+      .loc-addr { display: block; font-size: 24px; color: #999; margin-top: 8px; }
+    }
+  }
+}

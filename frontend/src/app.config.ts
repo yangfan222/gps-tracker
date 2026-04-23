@@ -1,0 +1,49 @@
+export default defineAppConfig({
+  pages: [
+    'pages/login/index',
+    'pages/index/index',
+    'pages/function/index',
+    'pages/profile/index',
+    'pages/track/index',
+    'pages/settings/index',
+    'pages/detail/index',
+    'pages/geofence/index',
+    'pages/alarm/index',
+    'pages/report/index',
+    'pages/sim-card/index',
+    'pages/add-device/index',
+    'pages/share/index',
+  ],
+  tabBar: {
+    color: '#999999',
+    selectedColor: '#1890ff',
+    backgroundColor: '#ffffff',
+    borderStyle: 'black',
+    list: [
+      {
+        pagePath: 'pages/index/index',
+        text: '定位',
+        iconPath: 'assets/tab-location.png',
+        selectedIconPath: 'assets/tab-location-active.png',
+      },
+      {
+        pagePath: 'pages/function/index',
+        text: '功能',
+        iconPath: 'assets/tab-function.png',
+        selectedIconPath: 'assets/tab-function-active.png',
+      },
+      {
+        pagePath: 'pages/profile/index',
+        text: '我的',
+        iconPath: 'assets/tab-profile.png',
+        selectedIconPath: 'assets/tab-profile-active.png',
+      },
+    ],
+  },
+  window: {
+    backgroundTextStyle: 'light',
+    navigationBarBackgroundColor: '#1890ff',
+    navigationBarTitleText: 'GPS定位器',
+    navigationBarTextStyle: 'white',
+  },
+})

@@ -1,0 +1,116 @@
+.geofence-page {
+  min-height: 100vh;
+  background: #f5f5f5;
+  position: relative;
+
+  .fence-list {
+    padding: 20px;
+
+    .empty {
+      text-align: center;
+      padding: 80px 0;
+      .empty-text { font-size: 28px; color: #999; }
+    }
+
+    .fence-item {
+      background: #fff;
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+
+      .fence-info {
+        flex: 1;
+        .fence-name { display: block; font-size: 30px; color: #333; font-weight: 500; margin-bottom: 8px; }
+        .fence-detail { font-size: 24px; color: #999; }
+      }
+
+      .fence-actions {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 8px;
+
+        .fence-status {
+          font-size: 22px;
+          padding: 4px 12px;
+          border-radius: 10px;
+          &.on { background: #e6f7e6; color: #52c41a; }
+          &.off { background: #f5f5f5; color: #999; }
+        }
+
+        .delete-btn {
+          font-size: 24px;
+          color: #ff4d4f;
+        }
+      }
+    }
+  }
+
+  .add-panel {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: flex-end;
+    z-index: 100;
+
+    .panel-content {
+      background: #fff;
+      width: 100%;
+      border-radius: 24px 24px 0 0;
+      padding: 30px;
+      padding-bottom: calc(30px + env(safe-area-inset-bottom));
+
+      .panel-title { display: block; font-size: 32px; font-weight: bold; color: #333; margin-bottom: 30px; text-align: center; }
+
+      .form-item {
+        margin-bottom: 20px;
+        .form-label { display: block; font-size: 26px; color: #666; margin-bottom: 10px; }
+        .form-input { background: #f5f5f5; border-radius: 12px; padding: 16px 20px; font-size: 28px; }
+      }
+
+      .form-hint {
+        margin-bottom: 20px;
+        .hint-text { font-size: 22px; color: #999; }
+      }
+
+      .form-btns {
+        display: flex;
+        gap: 20px;
+
+        .cancel-btn, .confirm-btn {
+          flex: 1;
+          height: 80px;
+          border-radius: 40px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 28px;
+        }
+
+        .cancel-btn { background: #f5f5f5; color: #666; }
+        .confirm-btn { background: #1890ff; color: #fff; }
+      }
+    }
+  }
+
+  .add-float-btn {
+    position: fixed;
+    right: 30px;
+    bottom: 120px;
+    width: 96px;
+    height: 96px;
+    background: #1890ff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(24,144,255,0.4);
+
+    .add-icon { color: #fff; font-size: 48px; }
+  }
+}
