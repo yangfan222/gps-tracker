@@ -76,10 +76,10 @@ export default function ProfilePage() {
       items: [
         { label: '修改密码', iconName: 'key', preset: 'red' as const, onClick: () => Taro.navigateTo({ url: '/pages/change-password/index' }) },
         { label: '售后投诉', iconName: 'headphones', preset: 'teal' as const, onClick: () => Taro.showToast({ title: '请联系客服：400-000-0000', icon: 'none' }) },
-        { label: '关于', iconName: 'info', preset: 'gray' as const, value: 'v1.0.4', onClick: () => {
+        { label: '关于', iconName: 'info', preset: 'gray' as const, value: 'v1.0.7', onClick: () => {
           Taro.showModal({
             title: 'GPS定位器',
-            content: '版本 v1.0.4\n智能定位 安全守护\n\n支持多种定位模式\n实时轨迹追踪\n电子围栏安全守护',
+            content: '版本 v1.0.7\n智能定位 安全守护\n\n实时定位追踪\n历史轨迹回放\n电子围栏安全守护\n多设备管理',
             showCancel: false,
           })
         }},

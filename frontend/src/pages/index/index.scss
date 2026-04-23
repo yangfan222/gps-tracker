@@ -245,15 +245,14 @@
           &.online {
             background: $primary-light;
 
-            .online-dot { background: $primary; }
+            .online-dot-char { color: $primary; }
             .online-text { color: $primary-dark; }
           }
 
-          .online-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: $text-tertiary;
+          .online-dot-char {
+            font-size: 16px;
+            line-height: 1;
+            color: $text-tertiary;
           }
 
           .online-text {
@@ -349,10 +348,10 @@
         }
 
         .action-icon {
-          width: 52px;
-          height: 52px;
-          border-radius: 14px;
-          margin-bottom: 4px;
+          width: 80px;
+          height: 80px;
+          border-radius: 20px;
+          margin-bottom: 6px;
           display: flex;
           align-items: center;
           justify-content: center;

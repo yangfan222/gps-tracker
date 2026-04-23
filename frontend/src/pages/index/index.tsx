@@ -188,7 +188,7 @@ export default function IndexPage() {
             <View className='header-left'>
               <Text className='device-name-text'>{currentDevice.deviceName || currentDevice.deviceId}</Text>
               <View className={`online-badge ${currentDevice.status}`}>
-                <View className='online-dot' />
+                <Text className='online-dot-char'>{'\u25CF'}</Text>
                 <Text className='online-text'>{currentDevice.status === 'online' ? '在线' : '离线'}</Text>
               </View>
             </View>
@@ -227,13 +227,13 @@ export default function IndexPage() {
           <View className='panel-actions'>
             <View className='action-btn' onClick={() => Taro.navigateTo({ url: `/pages/track/index?deviceId=${currentDevice.deviceId}` })}>
               <View className='action-icon track'>
-                <Icon name='route' size={36} color='#fff' />
+                <Icon name='route' size={48} color='#fff' />
               </View>
               <Text className='action-text'>轨迹</Text>
             </View>
             <View className='action-btn' onClick={() => Taro.navigateTo({ url: `/pages/settings/index?deviceId=${currentDevice.deviceId}` })}>
               <View className='action-icon settings'>
-                <Icon name='settings' size={36} color='#fff' />
+                <Icon name='settings' size={48} color='#fff' />
               </View>
               <Text className='action-text'>设置</Text>
             </View>
@@ -245,7 +245,7 @@ export default function IndexPage() {
             </View>
             <View className='action-btn' onClick={handleNavigate}>
               <View className='action-icon navigate'>
-                <Icon name='navigation' size={36} color='#fff' />
+                <Icon name='navigation' size={48} color='#fff' />
               </View>
               <Text className='action-text'>导航</Text>
             </View>
